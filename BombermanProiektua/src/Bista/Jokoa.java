@@ -1,4 +1,4 @@
-package bmberman.src.packBista;
+package Bista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import bmberman.src.packModeloa.BloqueMapa;
+import Eredua.BloqueMapa;
 public class Jokoa extends JFrame implements Observer{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;

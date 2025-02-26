@@ -1,4 +1,4 @@
-package bmberman.src.packBista;
+package Bista;
 
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
+
+import Eredua.MenuM;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,8 +30,6 @@ import javax.swing.SwingConstants;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.Color;
-
-import bmberman.src.packModeloa.MenuM;
 
 public class Menu extends JFrame implements Observer{
 

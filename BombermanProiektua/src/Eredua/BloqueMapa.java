@@ -1,4 +1,4 @@
-package bmberman.src.packModeloa;
+package Eredua;
 
 import java.util.Observable;
 import java.util.Random;

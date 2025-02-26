@@ -1,4 +1,4 @@
-package bmberman.src.packModeloa;
+package Eredua;
 
 public class Kuadrikula {
 	

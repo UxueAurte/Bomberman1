@@ -1,8 +1,8 @@
 package programaPrincipal;
-import bmberman.src.packBista.*;
-import bmberman.src.packModeloa.*;
-
 import javax.swing.SwingUtilities;
+
+import Bista.*;
+import Eredua.*;
 
 
 public class Main {
