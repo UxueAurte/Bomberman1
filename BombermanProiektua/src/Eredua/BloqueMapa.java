@@ -15,7 +15,7 @@ public class BloqueMapa extends Observable {
 	
 	private static Bomberman bmbrman; 
 	
-	private int etsaiak = 0;
+	private int etsaiak = 1;
 	
 	
 	
