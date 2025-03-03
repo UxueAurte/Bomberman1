@@ -39,6 +39,8 @@ public class BloqueMapa extends Observable {
 		
 	}
 	
+	
+	
 	public Bomberman getBomberman()
 	{
 		return bmberman;
@@ -50,7 +52,9 @@ public class BloqueMapa extends Observable {
 			for (int j=0; j < zutabeak; j++) {
 				mapa[i][j] = new Kuadrikula();
 				if((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 1 && j == 0)){
-					mapa[i][j].setNull();
+					mapa[i][j].setBloque(null);
+					mapa[i][j].setBomber(null);
+	                mapa[i][j].setBomba(null);
 									}
 				else if(i % 2 == 0 && j % 2 == 0) {
 					mapa[i][j].setBloque(new BlokeG());
@@ -61,11 +65,15 @@ public class BloqueMapa extends Observable {
 					}
 					else {
 						if(random.nextDouble() * 100 > 90 && etsaiak < 6) {
-							mapa[i][j].setNull();
+							mapa[i][j].setBloque(null);
+							mapa[i][j].setBomber(null);
+			                mapa[i][j].setBomba(null);
 							etsaiak++;
 						}
 						else {
-							mapa[i][j].setNull();
+							mapa[i][j].setBloque(null);
+							mapa[i][j].setBomber(null);
+			                mapa[i][j].setBomba(null);
 						}	
 					}
 				}
@@ -88,13 +96,17 @@ public class BloqueMapa extends Observable {
 		try {
 			int posX = bmberman.getX();
 			int posY = bmberman.getY();
-			
-			if(bmberman.getBombak()> 0) {
-				bmberman.kenduBomba();
+			if (!mapa[posY][posX].hasBomba()) {
+		        if (bomba == null) { // Validar e inicializar si es necesario
+		            bomba = new Bomba();
+		        }	
+		        if(bmberman.getBombak()> 0) {
+		        	bmberman.kenduBomba();
 				
-				mapa[posY][posX].setBomba(bmberman.getBomba());
-				bomba.setBomba(posY, posX);
-			}
+				
+		        	mapa[posY][posX].setBomba(bomba);
+		        	bomba.setBomba(posY, posX);
+		        }
 			//if(bmberman instance of WhiteBomberman) {
 			
 			
@@ -104,11 +116,12 @@ public class BloqueMapa extends Observable {
 				//mapa[bmberman.getY()][bmberman.getX()].setBombaB();
 			setChanged();
 			System.out.println("Notificando...");
-			System.out.println(mapa[posX][posY].getObjetua());
+			//System.out.println(mapa[posX][posY].getObjetua());
 			System.out.println("BOMBAK: " +bmberman.getBombak());
 
 			notifyObservers(new Object [] {"bomba", posY, posX});
 		
+			}
 		}
 		finally {
 			isHandlingKeyPress = false;
@@ -128,12 +141,10 @@ public class BloqueMapa extends Observable {
 			int posXBerria = bmberman.getX() + dx;
 			
 			
-			if (posXBerria >=0 && posXBerria < 18 && posYBerria >=0 && posYBerria < 12 && 
-					!(mapa[posYBerria][posXBerria].getObjetua() instanceof BlokeG ) && 
-					!(mapa[posYBerria][posXBerria].getObjetua() instanceof BlokeS)) {
+			if (posXBerria >=0 && posXBerria < 18 && posYBerria >=0 && posYBerria < 12 && !mapa[posYBerria][posXBerria].hasBloke()) {
 			
 			//Kuadrikula hori hutsitu
-				mapa[bmberman.getY()][bmberman.getX()].setNull();
+				mapa[bmberman.getY()][bmberman.getX()].removeBomberman();
 				
 				System.out.println("Moviendo Bomberman a posición: (" + posXBerria + ", " + posYBerria + ")");
 
@@ -143,7 +154,7 @@ public class BloqueMapa extends Observable {
 			
 			//bombermana leku berrira mugitu
 				mapa[posYBerria][posXBerria].setBomber(bmberman);
-				System.out.println(mapa[posYBerria][posXBerria].getObjetua());
+				//System.out.println(mapa[posYBerria][posXBerria].getObjetua());
 
 			
 			//notifikatu observer

@@ -37,10 +37,9 @@ public class Jokoa extends JFrame implements Observer {
 	
 	private int etsaiak = 0;
 	
-	private BloqueMapa bloqueMapa = new BloqueMapa();
-	
+
 	//private int[][] mapa;
-	private JLabel[][] kuadrikula;
+	private kuadrikulaVista[][] laberintoa;
 	private JLabel lblFondo;
 	
 	private ImageIcon fondoImg;
@@ -55,7 +54,7 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
-		bloqueMapa.addObserver(this);
+		BloqueMapa.getBloqueMapa().addObserver(this);
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
@@ -81,33 +80,40 @@ public class Jokoa extends JFrame implements Observer {
 
 	
 	
+	
+	
 	private void sortuMatrizea() {
 		JLabel fondoL = new JLabel (fondoImg);
 		fondoL.setLayout(new GridLayout(Filak, Zutabeak));
+		
+		laberintoa = new kuadrikulaVista[Filak][Zutabeak];
 
-		kuadrikula = new JLabel[Filak][Zutabeak];
 		for (int i = 0; i < Filak; i++) {
             for (int j = 0; j < Zutabeak; j++) {
-            	Kuadrikula kuad = bloqueMapa.getMapa()[i][j];
-                kuadrikula[i][j] = new JLabel();
-                kuadrikula[i][j].setPreferredSize(new Dimension(KuadrikulaTam, KuadrikulaTam));
-                kuadrikula[i][j].setOpaque(false); // Hacer transparentes los JLabel
-                kuadrikula[0][0].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/whitefront1.png")));
-                if (kuad.getObjetua()== null) {
-                		kuadrikula[i][j].setIcon(null);
-                		kuadrikula[i][j].setOpaque(false);
-                     }else if(kuad.getObjetua() instanceof BlokeS){
-                		kuadrikula[i][j].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/soft1.png")));
-                }else if(kuad.getObjetua() instanceof BlokeG) {
-                		kuadrikula[i][j].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/hard1.png")));
-                		
-                }else {
-                		kuadrikula[i][j].setIcon(null);
-                		
-                }
+            	Kuadrikula kuad = BloqueMapa.getBloqueMapa().getMapa()[i][j];
+            	kuad.addObserver(new kuadrikulaVista());
+            	
+            	laberintoa[i][j] = new kuadrikulaVista();
+            	
+            	laberintoa[i][j].setPreferredSize(new Dimension(KuadrikulaTam, KuadrikulaTam));
+            	laberintoa[i][j].setOpaque(false); // Hacer transparentes los JLabel
+            	laberintoa[0][0].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/whitefront1.png")));
+            	  if (kuad.hasBomberman()) {
+            		  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/whitefront1.png")));
+                  } else if (kuad.hasBomba()) {
+                	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/bomb1.png")));
+                  } else if (kuad.hasBloke()) {
+                      if (kuad.getBloke() instanceof BlokeG) {
+                    	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/hard1.png")));
+                      } else if (kuad.getBloke() instanceof BlokeS) {
+                    	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
+                      }
+                  } else {
+                	  laberintoa[i][j].setIcon(null); // Celda vacía
+                  }
                 
-                fondoL.add(kuadrikula[i][j]);
-        		System.out.println("Posición (" + i + "," + j + "): " + kuadrikula[i][j].getClass());
+                fondoL.add(laberintoa[i][j]);
+        		System.out.println("Posición (" + i + "," + j + "): " + laberintoa[i][j].getClass());
 
             }
 		}
@@ -118,19 +124,18 @@ public class Jokoa extends JFrame implements Observer {
 	    for (int i = 0; i < Filak; i++) {
 	        for (int j = 0; j < Zutabeak; j++) {
 	            // Actualizar la imagen del JLabel según el estado de cada celda
-	            if (mapa[i][j].getObjetua() instanceof Bomberman) {
-	                kuadrikula[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/whitefront1.png")));
-	            } else if (mapa[i][j].getObjetua() instanceof BlokeS) {
-	                kuadrikula[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
-	            } else if (mapa[i][j].getObjetua() instanceof BlokeG) {
-	                kuadrikula[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/hard1.png")));
-	                       
-	            }else {
-	                kuadrikula[i][j].setIcon(null);
+	        	
+	        	Kuadrikula[][] kuad = BloqueMapa.getBloqueMapa().getMapa();
+	        	kuadrikulaVista vista = laberintoa[i][j];
+	        	
+	        	vista.update(kuad[i][j], null);
+	        	
+	        	
+	            
 	            }
 	        }
 	    }
-	}
+	
 	
 	
 	
@@ -146,10 +151,10 @@ public class Jokoa extends JFrame implements Observer {
 		}
 		else if("mugimendua".equals(a)){
 			System.out.println("Recibido evento de actualización del mapa.");
-			actualizarMapa(bloqueMapa.getMapa());
+			actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
 		}else if("bomba".equals(a)) {
 			System.out.println("Recibido evento de actualización del mapa.");	
-			actualizarMapa(bloqueMapa.getMapa());
+			actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
 
 		}
 		setVisible(true);
@@ -162,27 +167,27 @@ public class Jokoa extends JFrame implements Observer {
 		switch (e.getKeyCode()) {
         	case KeyEvent.VK_UP:
         		u = "g";
-        		bloqueMapa.mugimendua(-1, 0, u);
+        		BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
         		isHandlingKeyPress = false;
         		break;
         	case KeyEvent.VK_DOWN:
         		u = "b";
-        		bloqueMapa.mugimendua(1, 0, u);
+        		BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
         		isHandlingKeyPress = false;
         		break;
         	case KeyEvent.VK_LEFT:
         		u = "ezk";
-        		bloqueMapa.mugimendua(0, -1, u);
+        		BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
         		isHandlingKeyPress = false;
         		break;
         	case KeyEvent.VK_RIGHT:
         		u = "esk";
-        		bloqueMapa.mugimendua(0, 1, u);
+        		BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
         		isHandlingKeyPress = false;
         		break;
         	case KeyEvent.VK_ENTER:
         		u = "bomba";
-        		bloqueMapa.bombaJ();
+        		BloqueMapa.getBloqueMapa().bombaJ();
         		isHandlingKeyPress = false;
         		break;
     }
