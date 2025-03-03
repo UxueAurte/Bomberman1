@@ -40,7 +40,7 @@ public class Jokoa extends JFrame implements Observer {
 	private BloqueMapa bloqueMapa = new BloqueMapa();
 	
 	//private int[][] mapa;
-	private JLabel[][]kuadrikula;
+	private JLabel[][] kuadrikula;
 	private JLabel lblFondo;
 	
 	private ImageIcon fondoImg;

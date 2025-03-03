@@ -1,8 +1,10 @@
 package bmberman.src.packModeloa;
 
-public class Kuadrikula {
+import java.util.Observable;
+
+public class Kuadrikula extends Observable{
 	
-	private Object kontenido;
+	private Object[] kontenido;
 	private Bomberman bomberman;
 	private Bloke bloke;
 	private Bomba bomba;
