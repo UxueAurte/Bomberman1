@@ -180,8 +180,8 @@ public class Jokoa extends JFrame implements Observer{
         case KeyEvent.VK_UP:
             bloqueMapa.mugimendua(0, -1);
             break;
-        case KeyEvent.VK_DOWN:
-            bloqueMapa.mugimendua(0, 1);
+        case KeyEvent.VK_DOWN: 
+            bloqueMapa.mugimendua(0, 2);
             break;
         case KeyEvent.VK_LEFT:
             bloqueMapa.mugimendua(-1, 0);
