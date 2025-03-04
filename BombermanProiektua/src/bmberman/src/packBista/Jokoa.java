@@ -162,7 +162,7 @@ public class Jokoa extends JFrame implements Observer {
 	}
 
 	
-	private void handleKeyPress(KeyEvent e) {
+	//private void handleKeyPress(KeyEvent e) {
 		String u = new String();
 		switch (e.getKeyCode()) {
         	case KeyEvent.VK_UP:
