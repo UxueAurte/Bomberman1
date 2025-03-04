@@ -96,16 +96,11 @@ public class BloqueMapa extends Observable {
 		try {
 			int posX = bmberman.getX();
 			int posY = bmberman.getY();
-			if (!mapa[posY][posX].hasBomba()) {
-		        if (bomba == null) { // Validar e inicializar si es necesario
-		            bomba = new Bomba();
-		        }	
-		        if(bmberman.getBombak()> 0) {
-		        	bmberman.kenduBomba();
-				
-				
-		        	mapa[posY][posX].setBomba(bomba);
-		        	bomba.setBomba(posY, posX);
+			if (!mapa[posY][posX].hasBomba()&& bmberman.getBombak() > 0) {
+	            bmberman.kenduBomba();
+	            Bomba bomba = new Bomba(this, posX, posY); // BloqueMapa pasatzen diogu bonbari
+	            mapa[posY][posX].setBomba(bomba);
+	            bomba.startCountdown(); // Bonba aktibatu (3 segundoko tenporizadorea)
 		        }
 			//if(bmberman instance of WhiteBomberman) {
 			
@@ -121,7 +116,7 @@ public class BloqueMapa extends Observable {
 
 			notifyObservers(new Object [] {"bomba", posY, posX});
 		
-			}
+			
 		}
 		finally {
 			isHandlingKeyPress = false;
@@ -129,9 +124,31 @@ public class BloqueMapa extends Observable {
 		}
 //	}
 	
+	public boolean barruanDago(int x, int y) {
+	    return x >= 0 && x < zutabeak && y >= 0 && y < filak;
+	}
+
+	public void garbituSua() {
+	    for (int i = 0; i < filak; i++) {
+	        for (int j = 0; j < zutabeak; j++) {
+	            mapa[i][j].setSutea(false);
+	            notifyObservers(new Object [] {"sua", i, j});
+	        }
 	
+	    }
+	}
 	
+	public void setSutea(int x, int y) {
+	    if (barruanDago(x, y)) { // Koordenatuak baliozkoak direla egiaztatu
+	        mapa[y][x].setSutea(true); // Kuadrikulan sua jarri
+	        notifyObservers(new Object [] {"sua", x, y});
+	    }
+	}
 	
+	public boolean hasBlokeGogorra(int x, int y) {
+	    return barruanDago(x, y) && mapa[y][x].hasBloke() && mapa[y][x].getBloke() instanceof BlokeG;
+	}
+
 	public void mugimendua(int dy, int dx, String mov) {
 		if (isHandlingKeyPress) return;
 		isHandlingKeyPress = true;

@@ -47,6 +47,14 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	            } else if (kuad.getBloke() instanceof BlokeS) {
 	                this.setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
 	            }
+	        	
+	        } else if (kuad.isSutea()) { // Sua badago
+	            this.setIcon(new ImageIcon(getClass().getResource("/resources/kaBomb0.png")));
+
+	            // Bloke bigunak suntsitu
+	            if (kuad.getBloke() instanceof BlokeS) {
+	                kuad.kenduBlokeBiguna(); // Blokea ezabatu datu-eredutik
+	            }
 	        } else {
 	            this.setIcon(null); // Celda vacía
 	        }

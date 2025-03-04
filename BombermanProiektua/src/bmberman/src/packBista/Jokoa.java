@@ -148,15 +148,16 @@ public class Jokoa extends JFrame implements Observer {
 		String a = (String) aux[0];
 		if(a == "hasieratu") {
 			sortuMatrizea();
-		}
-		else if("mugimendua".equals(a)){
-			System.out.println("Recibido evento de actualización del mapa.");
-			actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-		}else if("bomba".equals(a)) {
-			System.out.println("Recibido evento de actualización del mapa.");	
-			actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-
-		}
+		} else if ("mugimendua".equals(a)) {
+	        System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    } else if ("bomba".equals(a)) {
+	    	System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    }else if ( "sua".equals(a)) {
+	    	System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    }
 		setVisible(true);
 		
 	}
