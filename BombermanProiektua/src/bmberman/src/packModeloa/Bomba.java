@@ -17,7 +17,6 @@ public class Bomba {
 		this.y=y;
 	}
 	
-	
 	public void startCountdown() {
         active = true;
 
@@ -31,8 +30,9 @@ public class Bomba {
 	
 	public void estanda() {
 		if (!active) return;
-		
 		System.out.println("💥 BOOM! Bonba eztanda egin du!");
+		BloqueMapa mapa = BloqueMapa.getBloqueMapa();
+	    mapa.setSutea(x, y);
 		mapa.getMapa()[y][x].removeBomba();
 		expandEstanda(x,y);
 		
@@ -56,6 +56,10 @@ public class Bomba {
         expandDirection(x, y, 1, 0);  // Beherantz
         expandDirection(x, y, 0, -1); // Ezker
         expandDirection(x, y, 0, 1);  // Eskuina
+        if (mapa.barruanDago(x, y) && !mapa.hasBlokeGogorra(x, y)) {
+            mapa.setSutea(x, y);
+        }
+        
 	}
 	
 	private void expandDirection(int x, int y, int dx, int dy) {
@@ -65,11 +69,15 @@ public class Bomba {
 
 	            if (!mapa.barruanDago(nx, ny)) break; // Mapa barruan dagoen egiaztatu
 	            if (mapa.getMapa()[ny][nx].hasBlokeGogorra()) break; // Bloke gogorra bada, eztanda ez da pasako
-
-	            mapa.getMapa()[ny][nx].setSutea(true); // Sua jarri
+	            	mapa.getMapa()[ny][nx].setSutea(true); // Sua jarri
 	            if (mapa.getMapa()[ny][nx].hasBlokeBiguna()) {
 	                mapa.getMapa()[ny][nx].kenduBlokeBiguna(); // Bloke biguna suntsitu
 	                break;
+	            }
+	            if (mapa.getMapa()[ny][nx].hasBomberman()) {
+	            	Bomberman bomberman = mapa.getMapa()[ny][nx].getBomberman();
+	                System.out.println("Bomberman ha muerto por el fuego en (" + nx + ", " + ny + ")");
+	                BloqueMapa.getBloqueMapa().bombermanHil(nx, ny);  // Bomberman badago, hil
 	            }
 	        }
 	    }

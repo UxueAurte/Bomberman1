@@ -15,10 +15,12 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import bmberman.src.packModeloa.Bloke;
+import bmberman.src.packBista.Jokoa;
 import bmberman.src.packModeloa.BlokeG;
 import bmberman.src.packModeloa.BlokeS;
 import bmberman.src.packModeloa.BloqueMapa;
@@ -34,6 +36,8 @@ public class Jokoa extends JFrame implements Observer {
 	private static final int Filak = 11;
 	private static final int Zutabeak = 17;
 	private static final int KuadrikulaTam = 40;
+	private boolean jokoaAmaituDa = false;
+
 	
 	private boolean isHandlingKeyPress = false;
 	
@@ -65,9 +69,7 @@ public class Jokoa extends JFrame implements Observer {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		
 		fondoImg = new ImageIcon(getClass().getResource("/resources/StageBack1.png"));
-
 		sortuMatrizea();
 		
 		//keyListener
@@ -83,9 +85,45 @@ public class Jokoa extends JFrame implements Observer {
 		hasiEguneratzea();
 	}
 
-	
-	
-	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		System.out.println("Aktualizatzen");
+		Object [] aux = (Object[]) arg;
+		String a = (String) aux[0];
+		if(a == "hasieratu") {
+			sortuMatrizea();
+		} else if ("mugimendua".equals(a)) {
+	        System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    } else if ("bomba".equals(a)) {
+	    	System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    }else if ( "sua".equals(a)) {
+	    	System.out.println("Mapa eguneratzen...");
+	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+	    } else if ("hil".equals(a)) {	    	
+	    	hildaBomberman();
+	    }
+
+		
+		setVisible(true);
+		
+	}
+	public void hildaBomberman() {
+		
+		if (!jokoaAmaituDa) {
+			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
+			jokoaAmaituDa = true;
+		}
+	}
+
+/*	public void hildaBomberman() {
+		if (!jokoaAmaituDa) {
+			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
+			jokoaAmaituDa = true;
+		}
+	} */
 	
 	private void sortuMatrizea() {
 		JLabel fondoL = new JLabel (fondoImg);
@@ -133,14 +171,10 @@ public class Jokoa extends JFrame implements Observer {
 	        	Kuadrikula[][] kuad = BloqueMapa.getBloqueMapa().getMapa();
 	        	kuadrikulaVista vista = laberintoa[i][j];
 	        	
-	        	vista.update(kuad[i][j], null);
-	        	
-	        	
-	            
+	        	vista.update(kuad[i][j], null);	
 	            }
 	        }
 	    }
-	
 	
 	private void hasiEguneratzea() {
 		timer.scheduleAtFixedRate(new TimerTask() {
@@ -151,30 +185,8 @@ public class Jokoa extends JFrame implements Observer {
             }
         }, 0, 1000); // 1 segunduro eguneratu
     }
-	
 
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		System.out.println("Aktualizatzen");
-		Object [] aux = (Object[]) arg;
-		String a = (String) aux[0];
-		if(a == "hasieratu") {
-			sortuMatrizea();
-		} else if ("mugimendua".equals(a)) {
-	        System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-	    } else if ("bomba".equals(a)) {
-	    	System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-	    }else if ( "sua".equals(a)) {
-	    	System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-	    }
-		setVisible(true);
-		
-	}
-
+//---------------------------------------------KONTROLADOREA-------------------------------------------------
 	
 	private void handleKeyPress(KeyEvent e) {
 		String u = new String();

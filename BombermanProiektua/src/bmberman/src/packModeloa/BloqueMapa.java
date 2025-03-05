@@ -2,6 +2,7 @@ package bmberman.src.packModeloa;
 
 import java.util.Observable;
 import java.util.Random;
+
 import java.util.ArrayList;
 
 public class BloqueMapa extends Observable {
@@ -15,34 +16,46 @@ public class BloqueMapa extends Observable {
 	private Bomberman bmberman;
 	private Bloke bloke;
 	private Bomba bomba; 
+
 	//private Etsaia etsaia;
 	private boolean isHandlingKeyPress = false;
-	
-	
 	private int etsaiak = 0;
-	
 	
 	
 	public static BloqueMapa getBloqueMapa() {
 		if(blokeMapa == null) {
 			blokeMapa = new BloqueMapa();
 		}
-		return blokeMapa;
-			
+		return blokeMapa;		
 	}
-	
-	
+
 	public BloqueMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
 		this.bmberman = new Bomberman(0, 0);
 		sortuMapa();
-		
 	}
 
-	public Bomberman getBomberman()
-	{
+	public Bomberman getBomberman(){
 		return bmberman;
 	}
+	
+	public void bombermanHil(int x, int y) {
+		 if (bmberman.getX() == x && bmberman.getY() == y) {
+		        setChanged();
+		        notifyObservers(new Object[]{"hil"});
+		    }
+	}
+	
+	public void hildaBomberman() {
+	    int x = bmberman.getX();
+	    int y = bmberman.getY();
+
+	    if (mapa[y][x].isSutea()) { 
+	        System.out.println("Bomberman hil da sua ikutu baitu!");
+	        bombermanHil(x, y);
+	    }
+	}
+	
 	private void sortuMapa() {
 		Random random = new Random();
 		String hasieratu = new String();
@@ -136,11 +149,16 @@ public class BloqueMapa extends Observable {
 	    }
 	}
 	
-	public void setSutea(int x, int y) {
-	    if (barruanDago(x, y)) { // Koordenatuak baliozkoak direla egiaztatu
-	        mapa[y][x].setSutea(true); // Kuadrikulan sua jarri
-	        notifyObservers(new Object [] {"sua", x, y});
-	    }
+
+	public void setSutea(int x, int y) { 
+		if (barruanDago(x, y)) { // Koordenatuak baliozkoak direla egiaztatu 
+			mapa[y][x].setSutea(true); // Kuadrikulan sua jarri 
+			notifyObservers(new Object [] {"sua", x, y}); 
+			if (bmberman.getX() == x && bmberman.getY() == y) { 
+				System.out.println("Bomberman hil da sua ikutu baitu!"); 
+				bombermanHil(x, y); 
+			} 
+		}
 	}
 	
 	public boolean hasBlokeGogorra(int x, int y) {
@@ -162,25 +180,28 @@ public class BloqueMapa extends Observable {
 				if (mapa[posYBerria][posXBerria].hasBomba()) {
 		            return; 
 		        }
-			//Kuadrikula hori hutsitu
+				//Kuadrikula hori hutsitu
 				mapa[bmberman.getY()][bmberman.getX()].removeBomberman();
 				System.out.println("Moviendo Bomberman a posición: (" + posXBerria + ", " + posYBerria + ")");
-			//Bombermanen koordenatuak eguneratu
+				//Bombermanen koordenatuak eguneratu
 				bmberman.mugitu(dx, dy);
-			//bombermana leku berrira mugitu
+				//bombermana leku berrira mugitu
 				mapa[posYBerria][posXBerria].setBomber(bmberman);
 				//System.out.println(mapa[posYBerria][posXBerria].getObjetua());
+				
 				setChanged();
 				System.out.println("Notificando...");
 				notifyObservers(new Object [] {"mugimendua", posYBerria, posXBerria});	
+				hildaBomberman();
 			}
 		} finally {
-	        isHandlingKeyPress = false; // Liberar el control
+	        isHandlingKeyPress = false; 
 	    }
 	}
 }
-
 	
+	
+
 
 //EN BLOQUE MAPA CREAR VARIOS METODOS CON LO QUE PUEDA PASAR DURANTE EL JUEO Y EN UN NOTIFYoBSERVERS METER UN STRIG CON LO QUE PASA 
 

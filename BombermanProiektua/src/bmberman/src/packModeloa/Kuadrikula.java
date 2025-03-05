@@ -114,4 +114,4 @@ public class Kuadrikula extends Observable{
         return sutea;
     }
 
-	}
+}
