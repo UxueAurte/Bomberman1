@@ -33,6 +33,7 @@ public class Bomba {
 		if (!active) return;
 		
 		System.out.println("💥 BOOM! Bonba eztanda egin du!");
+		mapa.getMapa()[y][x].removeBomba();
 		expandEstanda(x,y);
 		
 		//TIMER-a 2 segundo sua mantendu

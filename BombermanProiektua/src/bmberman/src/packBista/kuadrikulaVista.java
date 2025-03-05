@@ -58,6 +58,7 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	        } else {
 	            this.setIcon(null); // Celda vacía
 	        }
+			
 		}
 	}
 }

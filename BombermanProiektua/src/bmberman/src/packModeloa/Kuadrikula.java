@@ -107,7 +107,7 @@ public class Kuadrikula extends Observable{
     public void setSutea(boolean sutea) {
         this.sutea = sutea;
         setChanged();
-        notifyObservers(sutea); // Sua aktibatuta edo ez dagoen jakinarazi
+        notifyObservers("sua"); // Sua aktibatuta edo ez dagoen jakinarazi
     }
 
     public boolean isSutea() {

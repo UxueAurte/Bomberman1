@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import java.util.Random;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -24,6 +25,7 @@ import bmberman.src.packModeloa.BloqueMapa;
 import bmberman.src.packModeloa.Bomba;
 import bmberman.src.packModeloa.Bomberman;
 import bmberman.src.packModeloa.Kuadrikula;
+import java.util.TimerTask;
 
 public class Jokoa extends JFrame implements Observer {
 
@@ -44,6 +46,7 @@ public class Jokoa extends JFrame implements Observer {
 	
 	private ImageIcon fondoImg;
 	
+	private Timer timer;
 
 	/**
 	 * Launch the application.
@@ -76,6 +79,8 @@ public class Jokoa extends JFrame implements Observer {
 		});
 			  
 		setVisible(true);
+		timer=new Timer();
+		hasiEguneratzea();
 	}
 
 	
@@ -137,7 +142,15 @@ public class Jokoa extends JFrame implements Observer {
 	    }
 	
 	
-	
+	private void hasiEguneratzea() {
+		timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                // Maparen eguneratzea
+                actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
+            }
+        }, 0, 1000); // 1 segunduro eguneratu
+    }
 	
 
 	@Override
