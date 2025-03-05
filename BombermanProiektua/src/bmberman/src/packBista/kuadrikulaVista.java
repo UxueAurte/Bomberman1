@@ -18,6 +18,8 @@ import bmberman.src.packModeloa.Bomberman;
 import bmberman.src.packModeloa.Kuadrikula;
 
 public class kuadrikulaVista extends JLabel implements Observer {
+	public kuadrikulaVista() {
+	}
 
 	private static final long serialVersionUID = 1L;
 	
@@ -49,7 +51,7 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	            }
 	        	
 	        } else if (kuad.isSutea()) { // Sua badago
-	            this.setIcon(new ImageIcon(getClass().getResource("/resources/kaBomb0.png")));
+	            this.setIcon(new ImageIcon(getClass().getResource("/resources/miniBlast1.gif")));
 
 	            // Bloke bigunak suntsitu
 	            if (kuad.getBloke() instanceof BlokeS) {
