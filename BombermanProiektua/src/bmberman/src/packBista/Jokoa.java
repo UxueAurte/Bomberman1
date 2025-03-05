@@ -78,7 +78,7 @@ public class Jokoa extends JFrame implements Observer {
 		}
 		});
 			  
-		setVisible(true);
+		setVisible(true);  
 		timer=new Timer();
 		hasiEguneratzea();
 	}
