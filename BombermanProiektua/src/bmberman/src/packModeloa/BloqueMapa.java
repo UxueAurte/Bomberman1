@@ -38,9 +38,7 @@ public class BloqueMapa extends Observable {
 		sortuMapa();
 		
 	}
-	
-	
-	
+
 	public Bomberman getBomberman()
 	{
 		return bmberman;
@@ -152,38 +150,36 @@ public class BloqueMapa extends Observable {
 	public void mugimendua(int dy, int dx, String mov) {
 		if (isHandlingKeyPress) return;
 		isHandlingKeyPress = true;
-		int i = 1;
 		try {
 			int posYBerria = bmberman.getY() + dy;
 			int posXBerria = bmberman.getX() + dx;
 			
-			
 			if (posXBerria >=0 && posXBerria < 18 && posYBerria >=0 && posYBerria < 12 && !mapa[posYBerria][posXBerria].hasBloke()) {
-			
+				if (mapa[posYBerria][posXBerria].hasBloke()) {
+		            return;
+		        }
+				//Bomba jarriz gero, ezin gara berriro bomba ipini dugun tokira bueltatu
+				if (mapa[posYBerria][posXBerria].hasBomba()) {
+		            return; 
+		        }
 			//Kuadrikula hori hutsitu
 				mapa[bmberman.getY()][bmberman.getX()].removeBomberman();
-				
 				System.out.println("Moviendo Bomberman a posición: (" + posXBerria + ", " + posYBerria + ")");
-
-			
 			//Bombermanen koordenatuak eguneratu
 				bmberman.mugitu(dx, dy);
-			
 			//bombermana leku berrira mugitu
 				mapa[posYBerria][posXBerria].setBomber(bmberman);
 				//System.out.println(mapa[posYBerria][posXBerria].getObjetua());
-
-			
-			//notifikatu observer
 				setChanged();
 				System.out.println("Notificando...");
 				notifyObservers(new Object [] {"mugimendua", posYBerria, posXBerria});	
-		}
+			}
 		} finally {
 	        isHandlingKeyPress = false; // Liberar el control
 	    }
+	}
 }
-}
+
 	
 
 //EN BLOQUE MAPA CREAR VARIOS METODOS CON LO QUE PUEDA PASAR DURANTE EL JUEO Y EN UN NOTIFYoBSERVERS METER UN STRIG CON LO QUE PASA 
