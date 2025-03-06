@@ -43,7 +43,8 @@ public class BloqueMapa extends Observable {
 		 if (bmberman.getX() == x && bmberman.getY() == y) {
 		        setChanged();
 		        notifyObservers(new Object[]{"hil"});
-		    }
+		        jolasaGelditu();
+		 }
 	}
 	
 	public void hildaBomberman() {
@@ -55,6 +56,13 @@ public class BloqueMapa extends Observable {
 	        bombermanHil(x, y);
 	    }
 	}
+	
+	public void jolasaGelditu() {
+		jolasten = false;
+	}
+	public boolean isjolasten() {
+        return jolasten;
+    }
 	
 	private void sortuMapa() {
 		Random random = new Random();
@@ -166,6 +174,7 @@ public class BloqueMapa extends Observable {
 	}
 
 	public void mugimendua(int dy, int dx, String mov) {
+		if (!jolasten) return;
 		if (isHandlingKeyPress) return;
 		isHandlingKeyPress = true;
 		try {
