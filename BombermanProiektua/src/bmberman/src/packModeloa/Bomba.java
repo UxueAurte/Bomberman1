@@ -32,8 +32,8 @@ public class Bomba {
 		if (!active) return;
 		System.out.println("💥 BOOM! Bonba eztanda egin du!");
 		BloqueMapa mapa = BloqueMapa.getBloqueMapa();
-	    mapa.setSutea(x, y);
 		mapa.getMapa()[y][x].removeBomba();
+	    mapa.setSutea(x, y);
 		expandEstanda(x,y);
 		
 		//TIMER-a 2 segundo sua mantendu
@@ -69,7 +69,7 @@ public class Bomba {
 
 	            if (!mapa.barruanDago(nx, ny)) break; // Mapa barruan dagoen egiaztatu
 	            if (mapa.getMapa()[ny][nx].hasBlokeGogorra()) break; // Bloke gogorra bada, eztanda ez da pasako
-	            	mapa.getMapa()[ny][nx].setSutea(true); // Sua jarri
+	            	mapa.setSutea(nx, ny); // Sua jarri
 	            if (mapa.getMapa()[ny][nx].hasBlokeBiguna()) {
 	                mapa.getMapa()[ny][nx].kenduBlokeBiguna(); // Bloke biguna suntsitu
 	                break;

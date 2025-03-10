@@ -50,7 +50,7 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	                this.setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
 	            }
 	        	
-	        } else if (kuad.isSutea()) { // Sua badago
+	        } else if (kuad.hasSua()) { // Sua badago
 	            this.setIcon(new ImageIcon(getClass().getResource("/resources/miniBlast1.gif")));
 
 	            // Bloke bigunak suntsitu

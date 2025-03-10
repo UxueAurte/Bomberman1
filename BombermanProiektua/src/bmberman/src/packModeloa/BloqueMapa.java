@@ -14,8 +14,7 @@ public class BloqueMapa extends Observable {
 	private int zutabeak = 17;
 	private Kuadrikula[][] mapa;
 	private Bomberman bmberman;
-	private Bloke bloke;
-	private Bomba bomba; 
+	
 
 	//private Etsaia etsaia;
 	private boolean isHandlingKeyPress = false;
@@ -51,7 +50,7 @@ public class BloqueMapa extends Observable {
 	    int x = bmberman.getX();
 	    int y = bmberman.getY();
 
-	    if (mapa[y][x].isSutea()) { 
+	    if (mapa[y][x].hasSua()) { 
 	        System.out.println("Bomberman hil da sua ikutu baitu!");
 	        bombermanHil(x, y);
 	    }
@@ -150,7 +149,7 @@ public class BloqueMapa extends Observable {
 	public void garbituSua() {
 	    for (int i = 0; i < filak; i++) {
 	        for (int j = 0; j < zutabeak; j++) {
-	            mapa[i][j].setSutea(false);
+	            mapa[i][j].removeSua();
 	            notifyObservers(new Object [] {"sua", i, j});
 	        }
 	
@@ -159,8 +158,9 @@ public class BloqueMapa extends Observable {
 	
 
 	public void setSutea(int x, int y) { 
-		if (barruanDago(x, y)) { // Koordenatuak baliozkoak direla egiaztatu 
-			mapa[y][x].setSutea(true); // Kuadrikulan sua jarri 
+		if (barruanDago(x, y)) { // Koordenatuak baliozkoak direla egiaztatu
+			Sua sua = new Sua();
+			mapa[y][x].setSua(sua); // Kuadrikulan sua jarri 
 			notifyObservers(new Object [] {"sua", x, y}); 
 			if (bmberman.getX() == x && bmberman.getY() == y) { 
 				System.out.println("Bomberman hil da sua ikutu baitu!"); 

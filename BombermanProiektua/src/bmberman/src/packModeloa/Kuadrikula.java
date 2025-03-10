@@ -7,7 +7,7 @@ public class Kuadrikula extends Observable{
 	private Bomberman bomberman;
 	private Bloke bloke;
 	private Bomba bomba;
-	private boolean sutea;
+	private Sua sutea;
 
 	
 	
@@ -15,17 +15,9 @@ public class Kuadrikula extends Observable{
 		this.bomberman = null;
 		this.bomba = null;
         this.bloke = null;
-        this.sutea = false;
+        this.sutea = null;
 	}
 	
-	/*public int getMota() {
-		return mota;
-	}
-	
-	public void setMota(int pMota) {
-		mota = pMota;
-	}
-	*/
 	
 
     public boolean hasBomberman() {
@@ -38,6 +30,10 @@ public class Kuadrikula extends Observable{
 
     public boolean hasBloke() {
         return bloke != null;
+    }
+    
+    public boolean hasSua() {
+    	return sutea != null;
     }
     
     public boolean hasBlokeGogorra() {
@@ -54,6 +50,18 @@ public class Kuadrikula extends Observable{
             setChanged();
             notifyObservers(null);
         }
+    }
+    
+    public void setSua (Sua sua) {
+    	this.sutea = sua;
+    	setChanged();
+    	notifyObservers(sutea);
+    }
+    
+    public void removeSua() {
+    	this.sutea = null;
+    	setChanged();
+    	notifyObservers(sutea);
     }
 
 	public void setBomber(Bomberman bomberman) {
@@ -103,15 +111,11 @@ public class Kuadrikula extends Observable{
     public Bloke getBloke() {
         return bloke;
     }
-
-    public void setSutea(boolean sutea) {
-        this.sutea = sutea;
-        setChanged();
-        notifyObservers("sua"); // Sua aktibatuta edo ez dagoen jakinarazi
+    
+    public Sua getSua() {
+    	return sutea;
     }
 
-    public boolean isSutea() {
-        return sutea;
-    }
+ 
 
 }
