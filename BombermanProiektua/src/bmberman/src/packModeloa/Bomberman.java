@@ -1,11 +1,15 @@
 package bmberman.src.packModeloa;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Bomberman {
 	
 	private int posY;
 	private int posX;
 	private Bomba bomba;
 	private int bombak = 10;
+	private boolean martxan = false;
 	
 	public Bomberman(int y, int x) {
 		posY = y;
@@ -47,6 +51,30 @@ public class Bomberman {
 	
 	public void kenduBomba() {
 		bombak --;
+		
+		if(bombak == 0) {
+			rekargatu();
+		}
+		
 	}
+	
+	private void rekargatu() {
+		if (martxan) return;
+		martxan = true;
+		
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				gehituBomba();
+				martxan = false;
+			}
+		},3000);
+	}
+	
+	private void gehituBomba() {
+		this.bombak++;
+	}
+	
+	
 	
 }

@@ -14,6 +14,7 @@ public class BloqueMapa extends Observable {
 	private int zutabeak = 17;
 	private Kuadrikula[][] mapa;
 	private Bomberman bmberman;
+	private int bombak = 10;
 	
 
 	//private Etsaia etsaia;

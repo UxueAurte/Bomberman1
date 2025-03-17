@@ -36,13 +36,13 @@ public class Bomba {
 	    mapa.setSutea(x, y);
 		expandEstanda(x,y);
 		
-		//TIMER-a 2 segundo sua mantendu
+		//TIMER-a 3 segundo sua mantendu
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {
 				clearEstanda();
 			}
-		},2000);
+		},3000);
 	}
 	
 	private void expandEstanda( int x, int y) {
