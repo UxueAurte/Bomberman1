@@ -39,26 +39,23 @@ public class Jokoa extends JFrame implements Observer {
 	private static final int KuadrikulaTam = 40;
 	private boolean jokoaAmaituDa = false;
 
-	
 	private boolean isHandlingKeyPress = false;
-	
-	private int etsaiak = 0;
-	
-	private Controler controler = null;
-	
 
-	//private int[][] mapa;
+	private int etsaiak = 0;
+
+	private Controler controler = null;
+
+	// private int[][] mapa;
 	private KuadrikulaVista[][] laberintoa;
 	private JLabel lblFondo;
-	
+
 	private ImageIcon fondoImg;
-	
+
 	private Timer timer;
 
 	/**
 	 * Launch the application.
 	 */
-	
 
 	/**
 	 * Create the frame.
@@ -73,41 +70,40 @@ public class Jokoa extends JFrame implements Observer {
 
 		setContentPane(contentPane);
 		fondoImg = new ImageIcon(getClass().getResource("/resources/StageBack1.png"));
-		
-		//keyListener
+
+		// keyListener
 		addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
-			  
-		setVisible(true);  
+
+		setVisible(true);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		System.out.println("Aktualizatzen");
-		Object [] aux = (Object[]) arg;
+		Object[] aux = (Object[]) arg;
 		String a = (String) aux[0];
-		if(a == "hasieratu") {
+		if (a == "hasieratu") {
 			sortuMatrizea();
-	    } else if ("hil".equals(a)) {	    	
-	    	hildaBomberman();
-	    }else if("jokoaAmaitu".equals(a)) {
-	    	amaieraMezua();
-	    }
+		} else if ("hil".equals(a)) {
+			hildaBomberman();
+		} else if ("jokoaAmaitu".equals(a)) {
+			amaieraMezua();
+		}
 
-		
 		setVisible(true);
-		
+
 	}
-	
+
 	private Controler getControler() {
-		if(controler == null) {
+		if (controler == null) {
 			controler = new Controler();
 		}
 		return controler;
 	}
-	
+
 	public void hildaBomberman() {
-		
+
 		if (!jokoaAmaituDa) {
 			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
 			jokoaAmaituDa = true;
@@ -115,58 +111,53 @@ public class Jokoa extends JFrame implements Observer {
 			removeKeyListener(getControler());
 		}
 	}
-	
+
 	private void amaieraMezua() {
-	    EventQueue.invokeLater(() -> {
-	    	JOptionPane.showMessageDialog(this, "Jokoa amaitu da! Zorionak!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-	    });
-	    removeKeyListener(getControler()); // 
-	    jokoaAmaituDa = true;
+		EventQueue.invokeLater(() -> {
+			JOptionPane.showMessageDialog(this, "Jokoa amaitu da! Zorionak!", "Game Over",
+					JOptionPane.INFORMATION_MESSAGE);
+		});
+		removeKeyListener(getControler()); //
+		jokoaAmaituDa = true;
 	}
 
-
-	
 	private void sortuMatrizea() {
-		JLabel fondoL = new JLabel (fondoImg);
+		JLabel fondoL = new JLabel(fondoImg);
 		fondoL.setLayout(new GridLayout(Filak, Zutabeak));
-		
+
 		laberintoa = new KuadrikulaVista[Filak][Zutabeak];
 
 		for (int i = 0; i < Filak; i++) {
-            for (int j = 0; j < Zutabeak; j++) {
-            	Kuadrikula kuad = BloqueMapa.getBloqueMapa().getMapa()[i][j];
-            	KuadrikulaVista kv = new KuadrikulaVista();
-            	kuad.addObserver(kv);
-            	
-            	laberintoa[i][j] = kv;
-            	
-            	laberintoa[i][j].setPreferredSize(new Dimension(KuadrikulaTam, KuadrikulaTam));
-            	laberintoa[i][j].setOpaque(false); // Hacer transparentes los JLabel
-            	laberintoa[0][0].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/whitefront1.png")));
-            	  if (kuad.hasBomberman()) {
-            		  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/whitefront1.png")));
-                  } else if (kuad.hasBomba()) {
-                	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/bomb1.png")));
-                  } else if (kuad.hasBloke()) {
-                      if (kuad.getBloke() instanceof BlokeG) {
-                    	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/hard1.png")));
-                      } else if (kuad.getBloke() instanceof BlokeS) {
-                    	  laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
-                      }
-                  } else {
-                	  laberintoa[i][j].setIcon(null); // Celda vacía
-                  }
-                
-                fondoL.add(laberintoa[i][j]);
+			for (int j = 0; j < Zutabeak; j++) {
+				Kuadrikula kuad = BloqueMapa.getBloqueMapa().getMapa()[i][j];
+				KuadrikulaVista kv = new KuadrikulaVista();
+				kuad.addObserver(kv);
 
-            }
+				laberintoa[i][j] = kv;
+
+				laberintoa[i][j].setPreferredSize(new Dimension(KuadrikulaTam, KuadrikulaTam));
+				laberintoa[i][j].setOpaque(false); // Hacer transparentes los JLabel
+				laberintoa[0][0].setIcon(new ImageIcon(Jokoa.class.getResource("/resources/whitefront1.png")));
+				if (kuad.hasBomberman()) {
+					laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/whitefront1.png")));
+				} else if (kuad.hasBomba()) {
+					laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/bomb1.png")));
+				} else if (kuad.hasBloke()) {
+					if (kuad.getBloke() instanceof BlokeG) {
+						laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/hard1.png")));
+					} else if (kuad.getBloke() instanceof BlokeS) {
+						laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
+					}
+				} else {
+					laberintoa[i][j].setIcon(null); // Celda vacía
+				}
+
+				fondoL.add(laberintoa[i][j]);
+
+			}
 		}
 		add(fondoL);
 	}
-
-	
-	
-
 
 //---------------------------------------------KONTROLADOREA-------------------------------------------------
 	private class Controler implements KeyListener {
@@ -174,7 +165,7 @@ public class Jokoa extends JFrame implements Observer {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -182,38 +173,35 @@ public class Jokoa extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			String u = new String();
 			switch (e.getKeyCode()) {
-	        	case KeyEvent.VK_UP:
-	        		u = "up";
-	        		BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
-	        		break;
-	        	case KeyEvent.VK_DOWN:
-	        		u = "down";
-	        		BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
-	        		break;
-	        	case KeyEvent.VK_LEFT:
-	        		u = "left";
-	        		BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
-	        		break;
-	        	case KeyEvent.VK_RIGHT:
-	        		u = "right";
-	        		BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
-	        		break;
-	        	case KeyEvent.VK_ENTER:
-	        		u = "bomba";
-	        		BloqueMapa.getBloqueMapa().bombaJ();
-	        		break;
-	    }
+			case KeyEvent.VK_UP:
+				u = "up";
+				BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
+				break;
+			case KeyEvent.VK_DOWN:
+				u = "down";
+				BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
+				break;
+			case KeyEvent.VK_LEFT:
+				u = "left";
+				BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
+				break;
+			case KeyEvent.VK_RIGHT:
+				u = "right";
+				BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
+				break;
+			case KeyEvent.VK_ENTER:
+				u = "bomba";
+				BloqueMapa.getBloqueMapa().bombaJ();
+				break;
+			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
 
 }
-
-	
-	
