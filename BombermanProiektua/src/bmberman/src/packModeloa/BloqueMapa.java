@@ -33,9 +33,13 @@ public class BloqueMapa extends Observable {
 	public BloqueMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
 		this.bmberman = new Bomberman(0, 0);
-		sortuMapa();
 	}
 
+	public void mapaInizializatu() {
+		sortuMapa();
+		setChanged();
+		notifyObservers(new Object[] {"hasieratu"});
+	}
 	public Bomberman getBomberman(){
 		return bmberman;
 	}
@@ -67,7 +71,6 @@ public class BloqueMapa extends Observable {
 	
 	private void sortuMapa() {
 		Random random = new Random();
-		String hasieratu = new String();
 		this.mapa = new Kuadrikula[11][17];
 		for (int i=0; i < filak; i++) {
 			for (int j=0; j < zutabeak; j++) {
@@ -97,8 +100,6 @@ public class BloqueMapa extends Observable {
 		mapa[0][0].setBomber(bmberman);
 		System.out.println(this.blokeKop);
 		
-		setChanged();
-		notifyObservers(new Object[] {hasieratu});
 		;
 	}
 	

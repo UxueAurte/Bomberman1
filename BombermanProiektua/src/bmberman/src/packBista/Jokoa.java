@@ -48,7 +48,7 @@ public class Jokoa extends JFrame implements Observer {
 	
 
 	//private int[][] mapa;
-	private kuadrikulaVista[][] laberintoa;
+	private KuadrikulaVista[][] laberintoa;
 	private JLabel lblFondo;
 	
 	private ImageIcon fondoImg;
@@ -73,13 +73,11 @@ public class Jokoa extends JFrame implements Observer {
 
 		setContentPane(contentPane);
 		fondoImg = new ImageIcon(getClass().getResource("/resources/StageBack1.png"));
-		sortuMatrizea();
 		
 		//keyListener
 		addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
 			  
 		setVisible(true);  
-		timer=new Timer();
 	}
 
 	@Override
@@ -132,12 +130,12 @@ public class Jokoa extends JFrame implements Observer {
 		JLabel fondoL = new JLabel (fondoImg);
 		fondoL.setLayout(new GridLayout(Filak, Zutabeak));
 		
-		laberintoa = new kuadrikulaVista[Filak][Zutabeak];
+		laberintoa = new KuadrikulaVista[Filak][Zutabeak];
 
 		for (int i = 0; i < Filak; i++) {
             for (int j = 0; j < Zutabeak; j++) {
             	Kuadrikula kuad = BloqueMapa.getBloqueMapa().getMapa()[i][j];
-            	kuadrikulaVista kv = new kuadrikulaVista();
+            	KuadrikulaVista kv = new KuadrikulaVista();
             	kuad.addObserver(kv);
             	
             	laberintoa[i][j] = kv;
@@ -166,18 +164,7 @@ public class Jokoa extends JFrame implements Observer {
 		add(fondoL);
 	}
 
-	public void actualizarMapa(Kuadrikula[][] mapa) {
-	    for (int i = 0; i < Filak; i++) {
-	        for (int j = 0; j < Zutabeak; j++) {
-	            // Actualizar la imagen del JLabel según el estado de cada celda
-	        	
-	        	Kuadrikula[][] kuad = BloqueMapa.getBloqueMapa().getMapa();
-	        	kuadrikulaVista vista = laberintoa[i][j];
-	        	
-	        	vista.update(kuad[i][j], null);	
-	            }
-	        }
-	    }
+	
 	
 
 
@@ -198,27 +185,22 @@ public class Jokoa extends JFrame implements Observer {
 	        	case KeyEvent.VK_UP:
 	        		u = "up";
 	        		BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
-	        		isHandlingKeyPress = false;
 	        		break;
 	        	case KeyEvent.VK_DOWN:
 	        		u = "down";
 	        		BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
-	        		isHandlingKeyPress = false;
 	        		break;
 	        	case KeyEvent.VK_LEFT:
 	        		u = "left";
 	        		BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
-	        		isHandlingKeyPress = false;
 	        		break;
 	        	case KeyEvent.VK_RIGHT:
 	        		u = "right";
 	        		BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
-	        		isHandlingKeyPress = false;
 	        		break;
 	        	case KeyEvent.VK_ENTER:
 	        		u = "bomba";
 	        		BloqueMapa.getBloqueMapa().bombaJ();
-	        		isHandlingKeyPress = false;
 	        		break;
 	    }
 		}

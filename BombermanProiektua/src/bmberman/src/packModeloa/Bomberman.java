@@ -8,7 +8,7 @@ public class Bomberman {
 	private int posY;
 	private int posX;
 	private Bomba bomba;
-	private int bombak = 1000;
+	private int bombak = 10;
 	private boolean martxan = false;
 	private String nora;
 	

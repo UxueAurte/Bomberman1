@@ -6,13 +6,14 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 
-public class Main {
+public class Main extends JFrame{
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		BloqueMapa mapa = new BloqueMapa();
+		BloqueMapa mapa = BloqueMapa.getBloqueMapa();
 		Jokoa j = new Jokoa();
 		
+		mapa.mapaInizializatu();
 		
         j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         j.setSize(800, 500);

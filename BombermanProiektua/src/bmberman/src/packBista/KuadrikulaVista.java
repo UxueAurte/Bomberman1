@@ -18,8 +18,8 @@ import bmberman.src.packModeloa.Bomba;
 import bmberman.src.packModeloa.Bomberman;
 import bmberman.src.packModeloa.Kuadrikula;
 
-public class kuadrikulaVista extends JLabel implements Observer {
-	public kuadrikulaVista() {
+public class KuadrikulaVista extends JLabel implements Observer {
+	public KuadrikulaVista() {
 	}
 
 	private static final long serialVersionUID = 1L;
