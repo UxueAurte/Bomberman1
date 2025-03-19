@@ -8,10 +8,11 @@ public class Bomba {
 	private int y;
 	private int x;
 	private boolean active;
-	private BloqueMapa mapa;
+	private boolean bombermanHil = false;
+	//private BloqueMapa mapa;
 	
-	public Bomba(BloqueMapa pMapa, int x, int y) {
-		this.mapa=pMapa;
+	public Bomba(int x, int y) {
+		//this.mapa=pMapa;
 		this.active=false;
 		this.x=x;
 		this.y=y;
@@ -29,62 +30,89 @@ public class Bomba {
     }
 	
 	public void estanda() {
+		
+	
 		if (!active) return;
-		System.out.println("💥 BOOM! Bonba eztanda egin du!");
+		System.out.println("💥 BOOM! Bonbak eztanda egin du!");
+		
 		BloqueMapa mapa = BloqueMapa.getBloqueMapa();
+		
 		mapa.getMapa()[y][x].removeBomba();
-	    mapa.setSutea(x, y);
+		
+	    mapa.getMapa()[y][x].setSua(new Sua());
+	    
 		expandEstanda(x,y);
 		
-		//TIMER-a 3 segundo sua mantendu
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				clearEstanda();
-			}
-		},3000);
+		if (mapa.getMapa()[y][x].hasBomberman()) {
+		        mapa.bombermanHil(x, y);
+		  }
+		
 	}
 	
-	private void expandEstanda( int x, int y) {
-		if (mapa == null) {  
-	        System.err.println("Errorea: BloqueMapa ez dago hasieratuta!"); 
-	        return;
-	    }
+	private void expandEstanda(int x, int y) {
+		boolean bombermanHil = false;
 
-		mapa.setSutea(x,y);
-		expandDirection(x, y, -1, 0); // Gorantz
-        expandDirection(x, y, 1, 0);  // Beherantz
-        expandDirection(x, y, 0, -1); // Ezker
-        expandDirection(x, y, 0, 1);  // Eskuina
-        if (mapa.barruanDago(x, y) && !mapa.hasBlokeGogorra(x, y)) {
-            mapa.setSutea(x, y);
-        }
-        
+	    // Verifica cada dirección para la expansión del fuego
+	    boolean ezker = expandDirection(x, y, -1, 0);
+	    System.out.println("Ezker: " + ezker+ (x-1));
+	    
+	    boolean eskubi = expandDirection(x, y, 1, 0);
+	    System.out.println("Eskubi: " + eskubi+ (x+1));
+	    
+	    boolean gorantz = expandDirection(x, y, 0, -1);
+	    System.out.println("Gorantz: " + gorantz + (y-1));
+	    
+	    boolean beherantz = expandDirection(x, y, 0, 1);
+	    System.out.println("Beherantz: " + beherantz+ (y+1));
+
+	    System.out.println("Gorantz: " + gorantz);
+	    System.out.println("Beherantz: " + beherantz);
+	    System.out.println("Ezker: " + ezker);
+	    System.out.println("Eskubi: " + eskubi);
+
+	    // Actualiza el estado de Bomberman
+	    
+	    BloqueMapa.getBloqueMapa().printMapa();
+	    
+	    bombermanHil = gorantz || beherantz || ezker || eskubi;
+	    System.out.println(bombermanHil);
+	    // Si Bomberman fue alcanzado, maneja el evento de muerte
+	    if (bombermanHil) {
+	        BloqueMapa.getBloqueMapa().bombermanHil(x, y);
+	    }
 	}
-	
-	private void expandDirection(int x, int y, int dx, int dy) {
+
+	private boolean expandDirection(int x, int y, int dx, int dy) {
 		 for (int i = 1; i <= 1; i++) { // Default: 1 posizio zabaltzen du
 	            int nx = x + (dx * i);
 	            int ny = y + (dy * i);
+		
 
-	            if (!mapa.barruanDago(nx, ny)) break; // Mapa barruan dagoen egiaztatu
-	            if (mapa.getMapa()[ny][nx].hasBlokeGogorra()) break; // Bloke gogorra bada, eztanda ez da pasako
-	            	mapa.setSutea(nx, ny); // Sua jarri
-	            if (mapa.getMapa()[ny][nx].hasBlokeBiguna()) {
-	                mapa.getMapa()[ny][nx].kenduBlokeBiguna(); // Bloke biguna suntsitu
-	                break;
-	            }
-	            if (mapa.getMapa()[ny][nx].hasBomberman()) {
-	            	Bomberman bomberman = mapa.getMapa()[ny][nx].getBomberman();
-	                System.out.println("Bomberman ha muerto por el fuego en (" + nx + ", " + ny + ")");
-	                BloqueMapa.getBloqueMapa().bombermanHil(nx, ny);  // Bomberman badago, hil
+	    // Verifica si la posición está dentro de los límites del mapa
+	    if (nx >= 0 && nx < 17 && ny >= 0 && ny < 11) {
+	        Kuadrikula celda = BloqueMapa.getBloqueMapa().getMapa()[ny][nx];
+
+	        // Verifica si Bomberman está en la celda
+	        if (celda.hasBomberman()) {
+	        	
+	            System.out.println("Bomberman hil da (" + nx + ", " + ny + ")");
+	            celda.removeBomberman();
+	            celda.setSua(new Sua());
+	            return true; // Indica que Bomberman ha muerto
+	        }
+
+	        // Si no hay bloque duro, coloca el fuego
+	        if (!celda.hasBlokeGogorra()) {
+	            celda.setSua(new Sua());
+
+	            // Si hay un bloque blando, destrúyelo y detén la expansión en esa dirección
+	            if (celda.hasBlokeBiguna()) {
+	                celda.kenduBlokeBiguna();
 	            }
 	        }
 	    }
-	
-	private void clearEstanda() {
-        System.out.println("🔥 Sua desagertu da");
-        mapa.garbituSua(); // Mapatik sua kendu
-        active = false;
-    }
+	    }
+	    return false; // Si no hay Bomberman en esta dirección
+	} 
+		 
 }

@@ -8,12 +8,14 @@ public class Bomberman {
 	private int posY;
 	private int posX;
 	private Bomba bomba;
-	private int bombak = 10;
+	private int bombak = 1000;
 	private boolean martxan = false;
+	private String nora;
 	
 	public Bomberman(int y, int x) {
 		posY = y;
-		posX = x;;
+		posX = x;
+		nora = "up";
 		
 	}
 	
@@ -57,6 +59,14 @@ public class Bomberman {
 		}
 		
 	}
+	
+	public String getNorabide() {
+        return nora;
+    }
+	
+	public void setNorabide(String a) {
+        this.nora = a;
+    }
 	
 	private void rekargatu() {
 		if (martxan) return;

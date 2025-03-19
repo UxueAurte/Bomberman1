@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.util.Random;
 
 import bmberman.src.packModeloa.BlokeG;
 import bmberman.src.packModeloa.BlokeS;
@@ -35,12 +36,18 @@ public class kuadrikulaVista extends JLabel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		
+		Object [] aux = (Object[]) arg;
+		Random r = new Random();
+
+		
 		if (o instanceof Kuadrikula) {
 			
 			Kuadrikula kuad = (Kuadrikula) o;
-			
+			//if ((boolean[]) arg) {
+	
 			if(kuad.hasBomberman()) {
-	            this.setIcon(new ImageIcon(getClass().getResource("/resources/whitefront1.png")));
+				this.setIcon(new ImageIcon(getClass().getResource("/resources/white"+kuad.getBomberman().getNorabide()+r.nextInt(1, 4)+".png")));
 	        } else if (kuad.hasBomba()) {
 	            this.setIcon(new ImageIcon(getClass().getResource("/resources/bomb1.png")));
 	        } else if (kuad.hasBloke()) {
@@ -49,10 +56,8 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	            } else if (kuad.getBloke() instanceof BlokeS) {
 	                this.setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
 	            }
-	        	
 	        } else if (kuad.hasSua()) { // Sua badago
 	            this.setIcon(new ImageIcon(getClass().getResource("/resources/miniBlast1.gif")));
-
 	            // Bloke bigunak suntsitu
 	            if (kuad.getBloke() instanceof BlokeS) {
 	                kuad.kenduBlokeBiguna(); // Blokea ezabatu datu-eredutik
@@ -60,6 +65,7 @@ public class kuadrikulaVista extends JLabel implements Observer {
 	        } else {
 	            this.setIcon(null); // Celda vacía
 	        }
+			
 			
 		}
 	}

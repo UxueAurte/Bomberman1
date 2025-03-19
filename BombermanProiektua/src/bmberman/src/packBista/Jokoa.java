@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -43,6 +44,8 @@ public class Jokoa extends JFrame implements Observer {
 	
 	private int etsaiak = 0;
 	
+	private Controler controler = null;
+	
 
 	//private int[][] mapa;
 	private kuadrikulaVista[][] laberintoa;
@@ -73,16 +76,10 @@ public class Jokoa extends JFrame implements Observer {
 		sortuMatrizea();
 		
 		//keyListener
-		addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-	            handleKeyPress(e); // Llama a un método separado para manejar las teclas
-	        
-		}
-		});
+		addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
 			  
 		setVisible(true);  
 		timer=new Timer();
-		hasiEguneratzea();
 	}
 
 	@Override
@@ -93,37 +90,43 @@ public class Jokoa extends JFrame implements Observer {
 		String a = (String) aux[0];
 		if(a == "hasieratu") {
 			sortuMatrizea();
-		} else if ("mugimendua".equals(a)) {
-	        System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-	    } else if ("bomba".equals(a)) {
-	    	System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-	    }else if ( "sua".equals(a)) {
-	    	System.out.println("Mapa eguneratzen...");
-	        actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
 	    } else if ("hil".equals(a)) {	    	
 	    	hildaBomberman();
+	    }else if("jokoaAmaitu".equals(a)) {
+	    	amaieraMezua();
 	    }
 
 		
 		setVisible(true);
 		
 	}
+	
+	private Controler getControler() {
+		if(controler == null) {
+			controler = new Controler();
+		}
+		return controler;
+	}
+	
 	public void hildaBomberman() {
 		
 		if (!jokoaAmaituDa) {
 			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
 			jokoaAmaituDa = true;
+			BloqueMapa.getBloqueMapa().jolasaGelditu();
+			removeKeyListener(getControler());
 		}
 	}
+	
+	private void amaieraMezua() {
+	    EventQueue.invokeLater(() -> {
+	    	JOptionPane.showMessageDialog(this, "Jokoa amaitu da! Zorionak!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+	    });
+	    removeKeyListener(getControler()); // 
+	    jokoaAmaituDa = true;
+	}
 
-/*	public void hildaBomberman() {
-		if (!jokoaAmaituDa) {
-			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
-			jokoaAmaituDa = true;
-		}
-	} */
+
 	
 	private void sortuMatrizea() {
 		JLabel fondoL = new JLabel (fondoImg);
@@ -134,9 +137,10 @@ public class Jokoa extends JFrame implements Observer {
 		for (int i = 0; i < Filak; i++) {
             for (int j = 0; j < Zutabeak; j++) {
             	Kuadrikula kuad = BloqueMapa.getBloqueMapa().getMapa()[i][j];
-            	kuad.addObserver(new kuadrikulaVista());
+            	kuadrikulaVista kv = new kuadrikulaVista();
+            	kuad.addObserver(kv);
             	
-            	laberintoa[i][j] = new kuadrikulaVista();
+            	laberintoa[i][j] = kv;
             	
             	laberintoa[i][j].setPreferredSize(new Dimension(KuadrikulaTam, KuadrikulaTam));
             	laberintoa[i][j].setOpaque(false); // Hacer transparentes los JLabel
@@ -156,7 +160,6 @@ public class Jokoa extends JFrame implements Observer {
                   }
                 
                 fondoL.add(laberintoa[i][j]);
-        		System.out.println("Posición (" + i + "," + j + "): " + laberintoa[i][j].getClass());
 
             }
 		}
@@ -176,49 +179,59 @@ public class Jokoa extends JFrame implements Observer {
 	        }
 	    }
 	
-	private void hasiEguneratzea() {
-		timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // Maparen eguneratzea
-                actualizarMapa(BloqueMapa.getBloqueMapa().getMapa());
-            }
-        }, 0, 1000); // 1 segunduro eguneratu
-    }
+
 
 //---------------------------------------------KONTROLADOREA-------------------------------------------------
-	
-	private void handleKeyPress(KeyEvent e) {
-		String u = new String();
-		switch (e.getKeyCode()) {
-        	case KeyEvent.VK_UP:
-        		u = "g";
-        		BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
-        		isHandlingKeyPress = false;
-        		break;
-        	case KeyEvent.VK_DOWN:
-        		u = "b";
-        		BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
-        		isHandlingKeyPress = false;
-        		break;
-        	case KeyEvent.VK_LEFT:
-        		u = "ezk";
-        		BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
-        		isHandlingKeyPress = false;
-        		break;
-        	case KeyEvent.VK_RIGHT:
-        		u = "esk";
-        		BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
-        		isHandlingKeyPress = false;
-        		break;
-        	case KeyEvent.VK_ENTER:
-        		u = "bomba";
-        		BloqueMapa.getBloqueMapa().bombaJ();
-        		isHandlingKeyPress = false;
-        		break;
-    }
+	private class Controler implements KeyListener {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			String u = new String();
+			switch (e.getKeyCode()) {
+	        	case KeyEvent.VK_UP:
+	        		u = "up";
+	        		BloqueMapa.getBloqueMapa().mugimendua(0, -1, u);
+	        		isHandlingKeyPress = false;
+	        		break;
+	        	case KeyEvent.VK_DOWN:
+	        		u = "down";
+	        		BloqueMapa.getBloqueMapa().mugimendua(0, 1, u);
+	        		isHandlingKeyPress = false;
+	        		break;
+	        	case KeyEvent.VK_LEFT:
+	        		u = "left";
+	        		BloqueMapa.getBloqueMapa().mugimendua(-1, 0, u);
+	        		isHandlingKeyPress = false;
+	        		break;
+	        	case KeyEvent.VK_RIGHT:
+	        		u = "right";
+	        		BloqueMapa.getBloqueMapa().mugimendua(1, 0, u);
+	        		isHandlingKeyPress = false;
+	        		break;
+	        	case KeyEvent.VK_ENTER:
+	        		u = "bomba";
+	        		BloqueMapa.getBloqueMapa().bombaJ();
+	        		isHandlingKeyPress = false;
+	        		break;
+	    }
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
+
+}
 
 	
 	

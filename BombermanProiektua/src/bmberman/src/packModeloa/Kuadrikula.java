@@ -8,6 +8,8 @@ public class Kuadrikula extends Observable{
 	private Bloke bloke;
 	private Bomba bomba;
 	private Sua sutea;
+	private boolean[] zerDauka = new boolean[10];
+	private int kont;
 
 	
 	
@@ -16,6 +18,17 @@ public class Kuadrikula extends Observable{
 		this.bomba = null;
         this.bloke = null;
         this.sutea = null;
+        this.kont = 0;
+	}
+	
+	private void setGelaxkaMota() {
+		boolean[] a = new boolean[10];
+		a[0] = this.hasBomberman();
+		a[1] = this.hasBomba();
+		a[2] = this.hasBlokeBiguna();
+		a[3] = this.hasBlokeGogorra();
+		a[4] = this.hasSua();
+		
 	}
 	
 	
@@ -47,57 +60,75 @@ public class Kuadrikula extends Observable{
     public void kenduBlokeBiguna() {
         if (hasBlokeBiguna()) {
             bloke = null; // Bloke biguna ezabatu
+            BloqueMapa.getBloqueMapa().setBlokeKop();
+            System.out.println(BloqueMapa.getBloqueMapa().getBlokeKop());
+            if(BloqueMapa.getBloqueMapa().getBlokeKop()==0) {
+            	BloqueMapa.getBloqueMapa().jokoaAmaitu();
+            }
             setChanged();
-            notifyObservers(null);
+            notifyObservers(new Object[] {this.zerDauka});
         }
     }
     
     public void setSua (Sua sua) {
     	this.sutea = sua;
+    	this.kont++;
+    	   new java.util.Timer().schedule(new java.util.TimerTask() {
+               @Override
+               public void run() {
+                   removeSua();
+               }
+           }, 2000);
     	setChanged();
-    	notifyObservers(sutea);
+    	notifyObservers(new Object[] {this.zerDauka});
+    
     }
     
     public void removeSua() {
-    	this.sutea = null;
+    	  if (kont > 0) {
+    		  kont--;
+              if (kont == 0) {
+            	  this.sutea = null;
+              }
+    }
     	setChanged();
-    	notifyObservers(sutea);
+      	notifyObservers(new Object[] {this.zerDauka});
     }
 
 	public void setBomber(Bomberman bomberman) {
 		// TODO Auto-generated method stub
 		this.bomberman = bomberman;
 		setChanged();
-		notifyObservers(bomberman);
+		notifyObservers(new Object[] {this.zerDauka});
 	}
 	
 	public void removeBomberman() {
         this.bomberman = null;
         setChanged();
-		notifyObservers(bomberman);
+		notifyObservers(new Object[] {this.zerDauka});
     }
 	
 	public void setBloque(Bloke bloke) {
 		this.bloke = bloke;
 		setChanged();
-		notifyObservers(bloke);
+		notifyObservers(new Object[] {this.zerDauka});
 	}
 	public void removeBloke() {
         this.bloke = null;
         setChanged();
-		notifyObservers(bloke);
+		notifyObservers(new Object[] {this.zerDauka});
     }
 	
 	public void setBomba(Bomba bomba) {
 		this.bomba = bomba;
 		setChanged();
-		notifyObservers(bomba);
+		notifyObservers(new Object[] {this.zerDauka});
 	}
 	
 	public void removeBomba() {
         this.bomba = null;
         setChanged();
-		notifyObservers(bomba);
+		notifyObservers(new Object[] {this.zerDauka});
     }
 	
 	public Bomberman getBomberman() {
@@ -116,6 +147,8 @@ public class Kuadrikula extends Observable{
     	return sutea;
     }
 
- 
+    public void setNull() {
+    	
+    }
 
 }
