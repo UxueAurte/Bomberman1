@@ -32,10 +32,10 @@ public class BloqueMapa extends Observable {
 	public BloqueMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
 		this.bmberman = new Bomberman(0, 0);
-	}
+		this.sortuMapa() ;
+		}
 
 	public void mapaInizializatu() {
-		sortuMapa();
 		setChanged();
 		notifyObservers(new Object[] { "hasieratu" });
 	}

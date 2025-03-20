@@ -39,7 +39,6 @@ public class Jokoa extends JFrame implements Observer {
 	private static final int KuadrikulaTam = 40;
 	private boolean jokoaAmaituDa = false;
 
-	private boolean isHandlingKeyPress = false;
 
 	private int etsaiak = 0;
 
@@ -69,7 +68,7 @@ public class Jokoa extends JFrame implements Observer {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		fondoImg = new ImageIcon(getClass().getResource("/resources/StageBack1.png"));
+		fondoImg = new ImageIcon(getClass().getResource("/resources/stageBack1.png"));
 
 		// keyListener
 		addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
