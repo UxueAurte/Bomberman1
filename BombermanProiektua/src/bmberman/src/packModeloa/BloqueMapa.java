@@ -19,7 +19,7 @@ public class BloqueMapa extends Observable {
 
 	private String nora;
 
-	// private Etsaia etsaia;
+	private ArrayList<Etsaiak> etsaienLista= new ArrayList<>();
 	private int etsaiak = 0;
 
 	public static BloqueMapa getBloqueMapa() {
@@ -88,6 +88,9 @@ public class BloqueMapa extends Observable {
 						this.blokeKop++;
 					} else {
 						if (random.nextDouble() * 100 > 90 && etsaiak < 6) {
+							Etsaiak etsaia = new Etsaiak(j,i, this);
+							etsaienLista.add(etsaia);
+							mapa[i][j].setEtsaia(etsaia);
 							etsaiak++;
 
 						}
@@ -188,6 +191,14 @@ public class BloqueMapa extends Observable {
 		}
 	}
 
+	public void ezabatuEtsaia(int x, int y) {
+	    Kuadrikula kuad = mapa[y][x];
+	    if (kuad.hasEtsaia()) {
+	        etsaienLista.remove(kuad.getEtsaia());
+	        kuad.removeEtsaia();
+	    }
+	}
+	
 	public void jokoaAmaitu() {
 		// TODO Auto-generated method stub
 		jolasten = false;

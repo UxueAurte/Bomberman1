@@ -10,6 +10,7 @@ public class Kuadrikula extends Observable {
 	private Sua sutea;
 	private boolean[] zerDauka = new boolean[10];
 	private int kont;
+	private Etsaiak etsaia;
 
 	public Kuadrikula() {
 		this.bomberman = null;
@@ -147,5 +148,23 @@ public class Kuadrikula extends Observable {
 	public void setNull() {
 
 	}
+	public Etsaiak getEtsaia() {
+	    return this.etsaia;
+	}
 
+	public boolean hasEtsaia() {
+	    return etsaia != null;
+	}
+
+	public void setEtsaia(Etsaiak e) {
+	    etsaia = e;
+	    setChanged();
+	    notifyObservers();
+	}
+
+	public void removeEtsaia() {
+	    etsaia = null;
+	    setChanged();
+	    notifyObservers(new Object[] { this.zerDauka });
+	}
 }

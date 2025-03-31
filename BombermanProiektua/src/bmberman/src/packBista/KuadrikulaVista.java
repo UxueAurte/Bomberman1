@@ -60,6 +60,8 @@ public class KuadrikulaVista extends JLabel implements Observer {
 				if (kuad.getBloke() instanceof BlokeS) {
 					kuad.kenduBlokeBiguna(); // Blokea ezabatu datu-eredutik
 				}
+			}else if (kuad.hasEtsaia()) {
+				this.setIcon(new ImageIcon(getClass().getResource("/resources/baloon1.png")));
 			} else {
 				this.setIcon(null); // Celda vacía
 			}

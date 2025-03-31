@@ -147,6 +147,8 @@ public class Jokoa extends JFrame implements Observer {
 					} else if (kuad.getBloke() instanceof BlokeS) {
 						laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/soft1.png")));
 					}
+				}else if (kuad.hasEtsaia()) { 
+				    laberintoa[i][j].setIcon(new ImageIcon(getClass().getResource("/resources/baloon1.png")));
 				} else {
 					laberintoa[i][j].setIcon(null); // Celda vacía
 				}

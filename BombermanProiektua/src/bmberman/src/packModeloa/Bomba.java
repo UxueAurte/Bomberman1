@@ -39,7 +39,9 @@ public class Bomba {
 
 		mapa.getMapa()[y][x].removeBomba();
 
-		mapa.getMapa()[y][x].setSua(new Sua());
+		Sua sua= new Sua();
+		mapa.getMapa()[y][x].setSua(sua);
+		sua.etsaiakErre(x, y);
 
 		expandEstanda(x, y);
 
@@ -108,6 +110,12 @@ public class Bomba {
 					if (celda.hasBlokeBiguna()) {
 						celda.kenduBlokeBiguna();
 					}
+				}
+				
+				// Etsaia badago, kendu
+				if (celda.hasEtsaia()) {
+				    System.out.println("Etsaia hil da (" + nx + ", " + ny + ")");
+				    BloqueMapa.getBloqueMapa().ezabatuEtsaia(nx, ny);
 				}
 			}
 		}
