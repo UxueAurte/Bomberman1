@@ -3,11 +3,19 @@ package bmberman.src.packModeloa;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
+import bmberman.src.packBista.hasieraPanelaBista;
+import bmberman.src.packBista.Jokoa;
+
+
 import java.util.ArrayList;
 
 public class BloqueMapa extends Observable {
 	
 	private static BloqueMapa blokeMapa = null;
+	private static Jokoa jokoa;
+
 	//private ArrayList <Kuadrikula> arrayKuadrikula = new ArrayList <Kuadrikula>();
 	private boolean jolasten = true;
 	private int filak = 11;
@@ -16,10 +24,22 @@ public class BloqueMapa extends Observable {
 	private Bomberman bmberman;
 	private int bombak = 10;
 	
+	
 
 	//private Etsaia etsaia;
 	private boolean isHandlingKeyPress = false;
 	private int etsaiak = 0;
+	
+	public void hasieratu() {
+        jokoa = new Jokoa();
+        jokoa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jokoa.setSize(800, 500);
+        jokoa.setVisible(true);
+	}
+	
+	public void partidaHasieratu() {
+		new hasieraPanelaBista();
+	}
 	
 	
 	public static BloqueMapa getBloqueMapa() {
@@ -63,6 +83,7 @@ public class BloqueMapa extends Observable {
 	public boolean isjolasten() {
         return jolasten;
     }
+	
 	
 	private void sortuMapa() {
 		Random random = new Random();
