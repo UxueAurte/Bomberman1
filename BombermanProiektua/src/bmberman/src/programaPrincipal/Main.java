@@ -10,3 +10,11 @@ public class Main {
 	}		
       
 }
+
+
+
+
+//Bomberman Factory
+//Laberinto mota Factory
+//	--> Bombak Strategy
+// Etsaiak 

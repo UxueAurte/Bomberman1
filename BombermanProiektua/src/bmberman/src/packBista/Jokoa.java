@@ -47,9 +47,7 @@ public class Jokoa extends JFrame implements Observer {
 	// private int[][] mapa;
 	private KuadrikulaVista[][] laberintoa;
 	private JLabel lblFondo;
-
 	private ImageIcon fondoImg;
-
 	private Timer timer;
 
 	/**
@@ -63,17 +61,18 @@ public class Jokoa extends JFrame implements Observer {
 		BloqueMapa.getBloqueMapa().addObserver(this);
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(800, 500);
 		setBounds(100, 100, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		fondoImg = new ImageIcon(getClass().getResource("/resources/stageBack1.png"));
-
 		// keyListener
 		addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
-
+		sortuMatrizea();
 		setVisible(true);
+	
 	}
 
 	@Override

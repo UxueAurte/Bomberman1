@@ -40,15 +40,16 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	
 	public void initialize() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(800, 500);
+		setBounds(100, 100, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		contentPane.setLayout(null);
 		setContentPane(contentPane);		
 		panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBounds(0, 0, 450, 300);
+	    panel.setLayout(null);
+	    panel.setBounds(0, 0, 736, 453);
         
         
         contentPane.add(panel);
@@ -125,28 +126,26 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	}
 
 	*/
-	private JLabel getlblInfo() {
-		if (lblInfo == null) {
-			lblInfo = new JLabel("<Choose your player>");
-					//+ "<space> to start, <m>usic & <esc>to exit");
-			lblInfo.setFont(new Font("Tahoma", Font.BOLD, 15));
-			lblInfo.setForeground(new Color(0, 0, 0));
-            lblInfo.setBounds(225, 200, 350, 30);
-
+	    private JLabel getlblInfo() {
+			if (lblInfo == null) {
+				lblInfo = new JLabel("<Choose your player>");
+				lblInfo.setFont(new Font("Tahoma", Font.BOLD, 15));
+				lblInfo.setForeground(new Color(0, 0, 0));
+				lblInfo.setBounds(539, 377, 350, 30);
+			}
+			return lblInfo;
 		}
-		return lblInfo;
-	}
-	
-	private JLabel getlblInfo2() {
-		if (lblInfo2 == null) {
-			lblInfo2 = new JLabel("<space> to start, <m>usic & <esc>to exit");
-			lblInfo2.setFont(new Font("Tahoma", Font.BOLD, 10));
-			lblInfo2.setForeground(new Color(0, 0, 0));
-		    lblInfo2.setBounds(189, 231, 350, 30);
+		
+		private JLabel getlblInfo2() {
+			if (lblInfo2 == null) {
+				lblInfo2 = new JLabel("<space> to start, <m>usic & <esc>to exit");
+				lblInfo2.setFont(new Font("Tahoma", Font.BOLD, 10));
+				lblInfo2.setForeground(new Color(0, 0, 0));
+				lblInfo2.setBounds(503, 413, 350, 30);
 
+			}
+			return lblInfo2;
 		}
-		return lblInfo2;
-	}
 	
 	public void itxi() {
 		hasieraPanelaEredua.getHP().deleteObserver(this);
