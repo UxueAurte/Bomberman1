@@ -3,73 +3,89 @@ package bmberman.src.packModeloa;
 import java.util.Observable;
 import java.util.Random;
 
+import javax.swing.JFrame;
+
+import bmberman.src.packBista.hasieraPanelaBista;
+import bmberman.src.packBista.Jokoa;
+
+
 import java.util.ArrayList;
 
 public class BloqueMapa extends Observable {
-
+	
 	private static BloqueMapa blokeMapa = null;
-	// private ArrayList <Kuadrikula> arrayKuadrikula = new ArrayList
-	// <Kuadrikula>();
+	private static Jokoa jokoa;
+
+	//private ArrayList <Kuadrikula> arrayKuadrikula = new ArrayList <Kuadrikula>();
 	private boolean jolasten = true;
 	private int filak = 11;
 	private int zutabeak = 17;
 	private Kuadrikula[][] mapa;
 	private Bomberman bmberman;
+	private int bombak = 10;
 	private int blokeKop = 0;
-
 	private String nora;
-
+	//private Etsaia etsaia;
+	private boolean isHandlingKeyPress = false;
 	private ArrayList<Etsaiak> etsaienLista= new ArrayList<>();
 	private int etsaiak = 0;
-
+	
+	
+	public void hasieratu() {
+        jokoa = new Jokoa();
+        jokoa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jokoa.setSize(800, 500);
+        jokoa.setVisible(true);
+	}
+	
+	public void partidaHasieratu() {
+		new hasieraPanelaBista();
+	}
+	
+	
 	public static BloqueMapa getBloqueMapa() {
-		if (blokeMapa == null) {
+		if(blokeMapa == null) {
 			blokeMapa = new BloqueMapa();
 		}
-		return blokeMapa;
+		return blokeMapa;		
 	}
 
 	public BloqueMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
 		this.bmberman = new Bomberman(0, 0);
-		this.sortuMapa() ;
-		}
-
-	public void mapaInizializatu() {
-		setChanged();
-		notifyObservers(new Object[] { "hasieratu" });
+		this.sortuMapa();
 	}
 
-	public Bomberman getBomberman() {
+	public Bomberman getBomberman(){
 		return bmberman;
 	}
-
+	
 	public void bombermanHil(int x, int y) {
-		jolasaGelditu();
-		setChanged();
-		notifyObservers(new Object[] { "hil" });
-
+		 if (bmberman.getX() == x && bmberman.getY() == y) {
+		        setChanged();
+		        notifyObservers(new Object[]{"hil"});
+		        jolasaGelditu();
+		 }
 	}
-
+	
 	public void hildaBomberman() {
-		int j = bmberman.getX();
-		int i = bmberman.getY();
+	    int x = bmberman.getX();
+	    int y = bmberman.getY();
 
-		if (mapa[i][j].hasSua()) {
-			System.out.println("Bomberman hil da sua ikutu baitu!");
-			System.out.println(mapa[i][j].hasSua());
-			bombermanHil(i, j);
-		}
+	    if (mapa[y][x].hasSua()) { 
+	        System.out.println("Bomberman hil da sua ikutu baitu!");
+	        bombermanHil(x, y);
+	    }
 	}
-
+	
 	public void jolasaGelditu() {
 		jolasten = false;
 	}
-
 	public boolean isjolasten() {
-		return jolasten;
-	}
-
+        return jolasten;
+    }
+	
+	
 	private void sortuMapa() {
 		Random random = new Random();
 		this.mapa = new Kuadrikula[11][17];
@@ -207,7 +223,11 @@ public class BloqueMapa extends Observable {
 		notifyObservers(new Object[] { "jokoaAmaitu" });
 		System.out.println("Jokoa amaitu da! Zorionak!");
 	}
-
+	
 }
+	
+	
+
 
 //EN BLOQUE MAPA CREAR VARIOS METODOS CON LO QUE PUEDA PASAR DURANTE EL JUEO Y EN UN NOTIFYoBSERVERS METER UN STRIG CON LO QUE PASA 
+

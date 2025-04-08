@@ -74,7 +74,6 @@ public class Bomberman {
 		if (bombak == 0) {
 			rekargatu();
 		}
-
 	}
 
 	public String getNorabide() {
