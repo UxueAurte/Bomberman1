@@ -165,7 +165,7 @@ public class Kuadrikula extends Observable {
 	    notifyObservers();
 	}
 
-	public void removeEtsaia() {
+	public void removeEtsaia() { //
 	    this.etsaia = null;
 	    setChanged();
 	    notifyObservers();
