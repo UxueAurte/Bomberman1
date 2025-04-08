@@ -52,6 +52,7 @@ public class Etsaiak {
 	            if (!hurrengoa.hasBloke() && !hurrengoa.hasEtsaia() && !hurrengoa.hasBomba()) {
 	                aukeraLegalak.add(new int[]{nx, ny});
 	            }
+
 	        }
 	    }
 
@@ -68,6 +69,7 @@ public class Etsaiak {
 	        if (mapa.getMapa()[y][x].hasSua()) {
 	            hilEtsaia();  // Sua ukituz gero hil
 	        }
+	        BloqueMapa.getBloqueMapa().hildaBomberman();
 	    }
 	    // Bestela, ez dago mugitzerik (ez dago aukerarik)
 	}

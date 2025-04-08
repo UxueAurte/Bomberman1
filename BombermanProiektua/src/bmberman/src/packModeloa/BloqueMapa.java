@@ -75,7 +75,11 @@ public class BloqueMapa extends Observable {
 	    if (mapa[y][x].hasSua()) { 
 	        System.out.println("Bomberman hil da sua ikutu baitu!");
 	        bombermanHil(x, y);
+	    } else if (mapa[y][x].hasEtsaia()) {
+	        System.out.println("💀 Bomberman hil da: etsaia ukitu du!");
+	        bombermanHil(x, y);
 	    }
+	    
 	}
 	
 	public void jolasaGelditu() {
