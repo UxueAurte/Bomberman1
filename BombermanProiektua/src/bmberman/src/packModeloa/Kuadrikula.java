@@ -69,7 +69,7 @@ public class Kuadrikula extends Observable {
 
 	public void setSua(Sua sua) {
 		this.sutea = sua;
-		this.kont++;
+		this.kont = 1;  // reset
 		new java.util.Timer().schedule(new java.util.TimerTask() {
 			@Override
 			public void run() {
@@ -78,8 +78,10 @@ public class Kuadrikula extends Observable {
 		}, 2000);
 		setChanged();
 		notifyObservers(new Object[] { this.zerDauka });
-
 	}
+
+
+	
 
 	public void removeSua() {
 		if (kont > 0) {
@@ -153,7 +155,8 @@ public class Kuadrikula extends Observable {
 	}
 
 	public boolean hasEtsaia() {
-	    return etsaia != null;
+		boolean emaitza=this.etsaia != null && this.etsaia.bizirikDago();
+		return emaitza;
 	}
 
 	public void setEtsaia(Etsaiak e) {
@@ -163,8 +166,8 @@ public class Kuadrikula extends Observable {
 	}
 
 	public void removeEtsaia() {
-	    etsaia = null;
+	    this.etsaia = null;
 	    setChanged();
-	    notifyObservers(new Object[] { this.zerDauka });
+	    notifyObservers();
 	}
 }

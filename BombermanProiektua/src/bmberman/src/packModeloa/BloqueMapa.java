@@ -194,7 +194,8 @@ public class BloqueMapa extends Observable {
 	public void ezabatuEtsaia(int x, int y) {
 	    Kuadrikula kuad = mapa[y][x];
 	    if (kuad.hasEtsaia()) {
-	        etsaienLista.remove(kuad.getEtsaia());
+	    	Etsaiak etsaia = kuad.getEtsaia();
+	        etsaienLista.remove(etsaia); // LISTAtik kendu
 	        kuad.removeEtsaia();
 	    }
 	}

@@ -32,8 +32,24 @@ public class Bomberman {
 	}
 
 	public void mugitu(int dx, int dy) {
-		posY += dy;
-		posX += dx;
+		int nx = posX + dx;
+		int ny = posY + dy;
+		BloqueMapa mapa= BloqueMapa.getBloqueMapa();
+		// Mugimendua legezkoa den egiaztatu
+		if (mapa.barruanDago(nx, ny)) {
+			Kuadrikula helburua = mapa.getMapa()[ny][nx];
+
+			
+
+			// Ez badago bloke gogorrik edo bigunik
+			if (!helburua.hasBloke()) {
+				mapa.getMapa()[posY][posX].removeBomberman();
+				posX = nx;
+				posY = ny;
+				mapa.getMapa()[posY][posX].setBomber(this);
+			}
+		}
+		
 	}
 
 	public void setX(int x) {

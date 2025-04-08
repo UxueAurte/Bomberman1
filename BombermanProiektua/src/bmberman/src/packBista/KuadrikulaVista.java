@@ -31,13 +31,12 @@ public class KuadrikulaVista extends JLabel implements Observer {
 	/**
 	 * Create the frame.
 	 */
-
+	
 	@Override
 	public void update(Observable o, Object arg) {
 
 		Object[] aux = (Object[]) arg;
 		Random r = new Random();
-
 		if (o instanceof Kuadrikula) {
 
 			Kuadrikula kuad = (Kuadrikula) o;
