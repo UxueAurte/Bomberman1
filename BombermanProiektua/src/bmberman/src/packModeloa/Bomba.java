@@ -3,123 +3,75 @@ package bmberman.src.packModeloa;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bomba {
+import bmberman.src.packModeloa.BlokeMapa;
+import bmberman.src.packModeloa.Kuadrikula;
+import bmberman.src.packModeloa.Sua;
 
-	private int y;
-	private int x;
-	private boolean active;
-	private boolean bombermanHil = false;
-	// private BloqueMapa mapa;
+public abstract class Bomba {
+    protected int x, y;
+    protected boolean active;
 
-	public Bomba(int x, int y) {
-		// this.mapa=pMapa;
-		this.active = false;
-		this.x = x;
-		this.y = y;
-	}
+    public Bomba(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.active = false;
+        startCountdown();
+    }
 
-	public void startCountdown() {
-		active = true;
+    public void startCountdown() {
+        active = true;
+        new Timer().schedule(new TimerTask() {
+            public void run() {
+                eztanda();
+            }
+        }, 3000);
+    }
+    
+    public void eztanda() {
+        System.out.println("💥 BOOM! Bonbak eztanda egin du en (" + x + ", " + y + ")!");
+        BlokeMapa mapa = BlokeMapa.getBloqueMapa();
+        mapa.getMapa()[y][x].setSua(new Sua()); // Centro de la explosión
+        mapa.getMapa()[y][x].removeBomba();
+        expandEztanda();
+                
+    }
 
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				estanda();
-			}
-		}, 3000); // 3 segundo eta gero eztanda
-	}
+    protected abstract void expandEztanda(); // Diferentes estrategias de expansión
 
-	public void estanda() {
+    protected boolean expandDirection(int x, int y, int dx, int dy, int alcance) {
+        boolean continuar = true;
+        for (int i = 1; i <= alcance && continuar; i++) {
+            int nx = x + dx * i;
+            int ny = y + dy * i;
 
-		if (!active)
-			return;
-		System.out.println("💥 BOOM! Bonbak eztanda egin du!");
+            if (!BlokeMapa.getBloqueMapa().barruanDago(nx, ny)) {
+                break;
+            }
 
-		BloqueMapa mapa = BloqueMapa.getBloqueMapa();
-
-		mapa.getMapa()[y][x].removeBomba();
-
-		Sua sua= new Sua();
-		mapa.getMapa()[y][x].setSua(sua);
-		sua.etsaiakErre(x, y);
-
-		expandEstanda(x, y);
-
-		if (mapa.getMapa()[y][x].hasBomberman()) {
-			mapa.bombermanHil(x, y);
-		}
-
-	}
-
-	private void expandEstanda(int x, int y) {
-		boolean bombermanHil = false;
-
-		// Verifica cada dirección para la expansión del fuego
-		boolean ezker = expandDirection(x, y, -1, 0);
-		System.out.println("Ezker: " + ezker + (x - 1));
-
-		boolean eskubi = expandDirection(x, y, 1, 0);
-		System.out.println("Eskubi: " + eskubi + (x + 1));
-
-		boolean gorantz = expandDirection(x, y, 0, -1);
-		System.out.println("Gorantz: " + gorantz + (y - 1));
-
-		boolean beherantz = expandDirection(x, y, 0, 1);
-		System.out.println("Beherantz: " + beherantz + (y + 1));
-
-		System.out.println("Gorantz: " + gorantz);
-		System.out.println("Beherantz: " + beherantz);
-		System.out.println("Ezker: " + ezker);
-		System.out.println("Eskubi: " + eskubi);
-
-		// Actualiza el estado de Bomberman
-
-		BloqueMapa.getBloqueMapa().printMapa();
-
-		bombermanHil = gorantz || beherantz || ezker || eskubi;
-		System.out.println(bombermanHil);
-		// Si Bomberman fue alcanzado, maneja el evento de muerte
-		if (bombermanHil) {
-			BloqueMapa.getBloqueMapa().bombermanHil(x, y);
-		}
-	}
-
-	private boolean expandDirection(int x, int y, int dx, int dy) {
-		for (int i = 1; i <= 1; i++) { // Default: 1 posizio zabaltzen du
-			int nx = x + (dx * i);
-			int ny = y + (dy * i);
-
-			// Verifica si la posición está dentro de los límites del mapa
-			if (nx >= 0 && nx < 17 && ny >= 0 && ny < 11) {
-				Kuadrikula celda = BloqueMapa.getBloqueMapa().getMapa()[ny][nx];
-
-				// Verifica si Bomberman está en la celda
-				if (celda.hasBomberman()) {
-
-					System.out.println("Bomberman hil da (" + nx + ", " + ny + ")");
-					celda.removeBomberman();
-					celda.setSua(new Sua());
-					return true; // Indica que Bomberman ha muerto
-				}
-
-				// Si no hay bloque duro, coloca el fuego
-				if (!celda.hasBlokeGogorra()) {
-					celda.setSua(new Sua());
-
-					// Si hay un bloque blando, destrúyelo y detén la expansión en esa dirección
-					if (celda.hasBlokeBiguna()) {
-						celda.kenduBlokeBiguna();
-					}
-				}
-				
-				// Etsaia badago, kendu
-				if (celda.hasEtsaia()) {
-				    System.out.println("Etsaia hil da (" + nx + ", " + ny + ")");
-				    BloqueMapa.getBloqueMapa().ezabatuEtsaia(nx, ny);
-				}
-			}
-		}
-		return false; // Si no hay Bomberman en esta dirección
-	}
-
+            Kuadrikula celda = BlokeMapa.getBloqueMapa().getMapa()[ny][nx];
+            
+            // Primero aplicar fuego en todas las celdas
+            celda.setSua(new Sua());
+            
+            if (celda.hasEtsaia().equals("1")) {
+                celda.getEtsaia().hilEtsaia();
+            
+            // Luego verificar obstáculos
+            } else if (celda.hasBlokeGogorra().equals("1")) {
+                continuar = false;
+            } 
+            else if (celda.hasBlokeBiguna().equals("1")) {
+                celda.removeBloke();
+            }else if(celda.hasBomberman().equals("1")){
+            	BlokeMapa.getBloqueMapa().bombermanHil(nx, ny);
+            }
+            	          
+            BlokeMapa.getBloqueMapa().printMapa();
+        }
+        return false;
+    }
+    
+    
 }
+
+

@@ -14,9 +14,9 @@ public class BombermanFactory {
 	public static Bomberman createBomberman(String type) {
 		Bomberman bomberman = null;
 		if (type.equals("white")) {
-			bomberman = new WhiteBomberman(0,0,BloqueMapa.getBloqueMapa());
+			bomberman = new WhiteBomberman(0,0,BlokeMapa.getBloqueMapa());
 		} else {
-			bomberman = new BlackBomberman(0,0,BloqueMapa.getBloqueMapa());
+			bomberman = new BlackBomberman(0,0,BlokeMapa.getBloqueMapa());
 		}
 		return bomberman;
 	}

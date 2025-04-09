@@ -1,14 +1,25 @@
 package bmberman.src.programaPrincipal;
+import javax.swing.JFrame;
+
+import bmberman.src.packBista.*;
+import bmberman.src.packModeloa.*;
 import bmberman.src.packBista.*;
 import bmberman.src.packModeloa.*;
 
 
-public class Main {
+public class Main extends JFrame {
 
 	public static void main(String[] args) {
-		BloqueMapa.getBloqueMapa().partidaHasieratu();
-	}		
-      
+		// TODO Auto-generated method stub
+		BlokeMapa mapa = BlokeMapa.getBloqueMapa();
+		Jokoa j = new Jokoa();
+
+		mapa.konfiguratuMapa("c");;
+
+		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		j.setSize(800, 500);
+		j.setVisible(true);
+	}
 }
 
 

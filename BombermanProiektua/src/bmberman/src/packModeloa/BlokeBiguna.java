@@ -1,5 +1,5 @@
 package bmberman.src.packModeloa;
 
-public class BlokeS extends Bloke {
+public class BlokeBiguna extends Bloke {
 
 }

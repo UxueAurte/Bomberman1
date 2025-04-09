@@ -3,21 +3,32 @@ package bmberman.src.packModeloa;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bomberman {
+public abstract class Bomberman {
 
 	private int posY;
 	private int posX;
-	private Bomba bomba;
-	private int bombak = 10;
+	private BombaStrategy pBomba;
 	private boolean martxan = false;
-	private String nora;
+	protected String nora;
 
-	public Bomberman(int y, int x) {
+	public Bomberman(int y, int x, BlokeMapa mapa, BombaStrategy pB) {
 		posY = y;
 		posX = x;
 		nora = "up";
+		pBomba = pB; 
 
 	}
+	
+	public void bombaJarri() {
+		if(jarDezake()){
+			pBomba.bombaJ(posX, posY);
+			errekargatuBaldin();
+		}
+	}
+	
+	public String getNorabide() {
+        return nora;
+    }
 
 	public int getMota() {
 		return 1;
@@ -32,24 +43,8 @@ public class Bomberman {
 	}
 
 	public void mugitu(int dx, int dy) {
-		int nx = posX + dx;
-		int ny = posY + dy;
-		BloqueMapa mapa= BloqueMapa.getBloqueMapa();
-		// Mugimendua legezkoa den egiaztatu
-		if (mapa.barruanDago(nx, ny)) {
-			Kuadrikula helburua = mapa.getMapa()[ny][nx];
-
-			
-
-			// Ez badago bloke gogorrik edo bigunik
-			if (!helburua.hasBloke()) {
-				mapa.getMapa()[posY][posX].removeBomberman();
-				posX = nx;
-				posY = ny;
-				mapa.getMapa()[posY][posX].setBomber(this);
-			}
-		}
-		
+		posY += dy;
+		posX += dx;
 	}
 
 	public void setX(int x) {
@@ -60,46 +55,12 @@ public class Bomberman {
 		this.posY = y;
 	}
 
-	public Bomba getBomba() {
-		return bomba;
-	}
-
-	public int getBombak() {
-		return bombak;
-	}
-
-	public void kenduBomba() {
-		bombak--;
-
-		if (bombak == 0) {
-			rekargatu();
-		}
-	}
-
-	public String getNorabide() {
-		return nora;
-	}
-
 	public void setNorabide(String a) {
 		this.nora = a;
-	}
+		}
 
-	private void rekargatu() {
-		if (martxan)
-			return;
-		martxan = true;
+	protected abstract boolean jarDezake(); // Lógica en subclases
+    protected abstract void errekargatuBaldin(); // Lógica en subclases
 
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				gehituBomba();
-				martxan = false;
-			}
-		}, 3000);
-	}
-
-	private void gehituBomba() {
-		this.bombak++;
-	}
-
+	protected abstract Object getImage();
 }
