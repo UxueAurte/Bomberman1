@@ -50,14 +50,20 @@ public class BloqueMapa extends Observable {
 		return blokeMapa;		
 	}
 
-	public BloqueMapa() {
+	public BloqueMapa(String type, String mapa) {
 		this.mapa = new Kuadrikula[filak][zutabeak];
-		this.bmberman = new Bomberman(0, 0);
+		this.bmberman = createBomberman(type);
 		this.sortuMapa();
 	}
 
 	public Bomberman getBomberman(){
 		return bmberman;
+	}
+	
+	public Bomberman createBomberman(String type) {
+		Bomberman nireBomberman = BombermanFactory.getBombermanFactory().createBomberman(type);
+		return nireBomberman;
+		
 	}
 	
 	public void bombermanHil(int x, int y) {
