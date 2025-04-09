@@ -8,6 +8,7 @@ public class WhiteBomberman extends Bomberman{
 	private int bombak;
 	private final int MAX_BOMBAS = 10;
 	private String color = "white";
+	private boolean kargatzen = false;
 	
 	public WhiteBomberman(int py, int px, BlokeMapa mapa){
 		super(py, px, mapa, new BombaNormalStrategy());
@@ -28,15 +29,18 @@ public class WhiteBomberman extends Bomberman{
 
 	@Override
 	protected void errekargatuBaldin() {
-		new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                bombak++;
-                System.out.println("BlackBomberman ha recargado su bomba.");
-            }
-        }, 3000); // Recarga la bomba automáticamente después de 3 segundos
+		if (!kargatzen && bombak == 0) { // Solo iniciar recarga si no hay bombas disponibles
+			kargatzen = true;
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    bombak++; // Añade una bomba después de 3 segundos
+                    kargatzen = false; // Permite futuras recargas si es necesario
+                    System.out.println("WhiteBomberman ha recargado una bomba. Bombas disponibles: " + bombak);
+                }
+            }, 3000); // Tiempo de recarga
+        }
     }
-		
 	
 	
 	public void bombaJarri() {
