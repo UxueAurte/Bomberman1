@@ -249,9 +249,6 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 			// TODO Auto-generated method stub
 			
 		}
-
-    
-
 		
 	}
 
