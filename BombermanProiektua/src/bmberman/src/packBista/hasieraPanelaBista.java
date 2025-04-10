@@ -9,14 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 import java.util.Observer;
 import bmberman.src.packModeloa.*;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -31,80 +37,90 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 //	private JLabel lblBoss1;
 //	private JLabel lblBoss2;
 	private JLabel lblInfo;
-	private JLabel lblInfo2;
     private JLabel lblBlackBomberman;
     private JLabel lblWhiteBomberman;
+  	private JLabel fondoa;
     private boolean showJokoEgoerak = false;
 	private  hasieraPanelaKontroladorea kontroladorea = null;
 
 	
 	public void initialize() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 500);
-		setBounds(100, 100, 750, 500);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		contentPane.setLayout(null);
-		setContentPane(contentPane);		
-		panel = new JPanel();
-	    panel.setLayout(null);
-	    panel.setBounds(0, 0, 736, 453);
-        
-        
-        contentPane.add(panel);
-		panel.add(getLblIzenburua());
-		panel.add(getLblBlackBomberman()); 
-		panel.add(getLblWhiteBomberman());
-	//	panel.add(getBoss1());
-    //  panel.add(getBoss2());
-        panel.add(getlblInfo());
-        panel.add(getlblInfo2());
-		hasieraPanelaEredua.getHP().addObserver(this);
-		addKeyListener(kontroladorea);
-		System.out.println("La ventana debería aparecer ahora");
-		setVisible(true);		
-	}
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setSize(800, 500);
+			setBounds(100, 100, 750, 500);
+			contentPane = new JPanel();
+			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+			
+			contentPane.setLayout(null);
+			setContentPane(contentPane);		
+			panel = new JPanel(null);
+	        panel.setBounds(0, 0, 736, 453);
+	        
+	        fondoa = new JLabel(new ImageIcon(getClass().getResource("/resources/back.png")));
+	        fondoa.setBounds(0, 0, 736, 453);
+	        fondoa.setLayout(null);
+
+	        fondoa.add(getLblIzenburua());
+	        fondoa.add(getLblBlackBomberman()); 
+	        fondoa.add(getLblWhiteBomberman());
+		//	panel.add(getBoss1());
+	    //  panel.add(getBoss2());
+	        fondoa.add(getlblInfo());
+	        
+	        panel.add(fondoa);
+	        contentPane.add(panel);
+	        
+			hasieraPanelaEredua.getHP().addObserver(this);
+			addKeyListener(kontroladorea);
+			System.out.println("La ventana debería aparecer ahora");
+			setVisible(true);		
+		}
 	
 	public hasieraPanelaBista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initialize();
 	}
 	
-	private JLabel getLblIzenburua() {
-		if (lblIzenburua == null) {
-			lblIzenburua = new JLabel("");
-			lblIzenburua.setHorizontalAlignment(SwingConstants.CENTER);
-			lblIzenburua.setIcon(new ImageIcon("/resources/title.png"));
-			lblIzenburua.setBounds(100, 10, 250, 50);
-		}
-		return lblIzenburua;
-	}
 	
-	 private JLabel getLblBlackBomberman() {
-	        if (lblBlackBomberman == null) {
-	            lblBlackBomberman = new JLabel();
-	            lblBlackBomberman.setIcon(new ImageIcon("/resources/bomber2.png"));
-	            lblBlackBomberman.setBounds(100, 80, 50, 50);
-	            lblBlackBomberman.addKeyListener(getKontroladorea());
-	            lblBlackBomberman.setBounds(100, 80, 50, 50);
-	        }
-	        return lblBlackBomberman;
+	private JLabel getLblIzenburua() {
+			if (lblIzenburua == null) {
+				lblIzenburua = new JLabel("");
+				lblIzenburua.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				lblIzenburua.setHorizontalAlignment(SwingConstants.CENTER);
+				lblIzenburua.setIcon(new ImageIcon(getClass().getResource("/resources/title.png")));
+				lblIzenburua.setBounds(144, 28, 422, 97);
+			}
+			return lblIzenburua;
+		}
+	
+	private JLabel getLblBlackBomberman() {
+	    if (lblBlackBomberman == null) {
+	        lblBlackBomberman = new JLabel();
+	        ImageIcon icon = new ImageIcon(getClass().getResource("/resources/bomber2.png"));
+	        lblBlackBomberman.setIcon(icon);
+	        int width = icon.getIconWidth();
+	        int height = icon.getIconHeight();
+	        lblBlackBomberman.setBounds(480, 177, width, height);
+	        lblBlackBomberman.addMouseListener(getKontroladorea());
 	    }
+	    return lblBlackBomberman;
+	}
+
 
 	    private JLabel getLblWhiteBomberman() {
 	        if (lblWhiteBomberman == null) {
 	            lblWhiteBomberman = new JLabel();
-	            lblWhiteBomberman.setIcon(new ImageIcon("/resources/bomber1.png"));
-	            lblWhiteBomberman.setBounds(200, 80, 50, 50);
-	            lblWhiteBomberman.addKeyListener(getKontroladorea());
-	            lblWhiteBomberman.setBounds(200, 80, 50, 50);
+	            lblWhiteBomberman.setFont(new Font("Tahoma", Font.PLAIN, 61));
+	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1.png")));
+	            lblWhiteBomberman.setBounds(150, 179, 422, 97);
+	            lblWhiteBomberman.addMouseListener(getKontroladorea());
 
 	        }
 	        return lblWhiteBomberman;
 	    }
 	
-	
+
+	    
 	
 	/*private JLabel getBoss1() {
 		if (lblBoss1 == null) {
@@ -127,57 +143,57 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 
 	*/
 	    private JLabel getlblInfo() {
-			if (lblInfo == null) {
-				lblInfo = new JLabel("<Choose your player>");
-				lblInfo.setFont(new Font("Tahoma", Font.BOLD, 15));
-				lblInfo.setForeground(new Color(0, 0, 0));
-				lblInfo.setBounds(539, 377, 350, 30);
-			}
-			return lblInfo;
-		}
-		
-		private JLabel getlblInfo2() {
-			if (lblInfo2 == null) {
-				lblInfo2 = new JLabel("<space> to start, <m>usic & <esc>to exit");
-				lblInfo2.setFont(new Font("Tahoma", Font.BOLD, 10));
-				lblInfo2.setForeground(new Color(0, 0, 0));
-				lblInfo2.setBounds(503, 413, 350, 30);
+	 		if (lblInfo == null) {
+	 			lblInfo = new JLabel("Jokalaria Aukeratu");
+	 			lblInfo.setFont(new Font("Tahoma", Font.BOLD, 30));
+	 			lblInfo.setForeground(new Color(0, 0, 0));
+	 	        lblInfo.setBounds(411, 358, 557, 40);
+	 	 	}
+	 		return lblInfo;
+	 	}
 
-			}
-			return lblInfo2;
-		}
 	
 	public void itxi() {
 		hasieraPanelaEredua.getHP().deleteObserver(this);
 		dispose();
 	}
 	
-/*	private void showGameModeSelection() {
-	    JFrame gameModeSelectionWindow = new JFrame("Select Game Mode");
-	    gameModeSelectionWindow.setSize(300, 200);
-	    gameModeSelectionWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	private void partidaMota() {
+	    JDialog dialog = new JDialog(this, "Aukeratu Mapa Mota", true);
+	    dialog.setSize(300, 200);
+	    dialog.setLocationRelativeTo(this);
+	    dialog.setLayout(new BorderLayout());
 
-	    JPanel panel = new JPanel();
-	    panel.setLayout(new GridLayout(3, 1));
+	    JPanel centerPanel = new JPanel(new GridLayout(3, 1));
+	    JRadioButton classic = new JRadioButton("Classic");
+	    JRadioButton soft = new JRadioButton("Soft");
+	    JRadioButton empty = new JRadioButton("Empty");
 
-	    JLabel classicLabel = new JLabel("Classic");
-	    JLabel emptyLabel = new JLabel("Empty");
-	    JLabel softLabel = new JLabel("Soft");
+	    ButtonGroup group = new ButtonGroup();
+	    group.add(classic);
+	    group.add(soft);
+	    group.add(empty);
 
-	    // Asignamos el controlador para gestionar los clics
-	    classicLabel.addMouseListener(getKontroladorea());
-	    emptyLabel.addMouseListener(getKontroladorea());
-	    softLabel.addMouseListener(getKontroladorea());
+	    centerPanel.add(classic);
+	    centerPanel.add(soft);
+	    centerPanel.add(empty);
 
-	    panel.add(classicLabel);
-	    panel.add(emptyLabel);
-	    panel.add(softLabel);
+	    JButton startButton = new JButton("Hasi Jokoa");
+	    startButton.addActionListener(e -> {
+	        String tipoPartida = "classic"; // valor por defecto
+	        if (soft.isSelected()) tipoPartida = "soft";
+	        else if (empty.isSelected()) tipoPartida = "empty";
 
-	    gameModeSelectionWindow.add(panel);
-	    gameModeSelectionWindow.setVisible(true);
+	        dialog.dispose(); // Cierra la ventanita
+	        
+	    });
+
+	    dialog.add(centerPanel, BorderLayout.CENTER);
+	    dialog.add(startButton, BorderLayout.SOUTH);
+	    dialog.setVisible(true);
 	}
-*/
-		
+
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -193,7 +209,8 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 
 		
 	//---------------------------------------KONTROLADOREA---------------------------------------
-	private class hasieraPanelaKontroladorea implements ActionListener, KeyListener {
+	private class hasieraPanelaKontroladorea extends MouseAdapter implements ActionListener, KeyListener {
+	    
 		
 		public void actionPerformed(ActionEvent e) {}
 		
@@ -201,15 +218,39 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				hasieraPanelaEredua nHP = hasieraPanelaEredua.getHP();
 				new Jokoa();
+		        itxi();
 			}
+		}
+		
+		
+		public void mouseClicked(MouseEvent evt) {
+	        if (evt.getSource() == lblBlackBomberman) {
+	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1 copia.png")));
+	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2.png")));
+	            
+	            partidaMota();
+	        } else if (evt.getSource() == lblWhiteBomberman) {
+	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1.png")));
+	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2bw.png")));
+
+	            
+	            partidaMota();
+	        }
+	    }
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
-		public void keyTyped(KeyEvent e) {}
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 
-		@Override
-		public void keyReleased(KeyEvent e) {}
-
+    
 
 		
 	}
