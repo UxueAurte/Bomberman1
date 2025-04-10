@@ -147,7 +147,7 @@ public class BlokeMapa extends Observable {
 	                mapa[i][j].setBloke(bloke);
                     this.blokeKop++;
 	            }else{
-	            	if (random.nextDouble() * 100 > 90 && etsaikop < 6) {
+	            	if (random.nextDouble() * 100 > 90 && etsaikop < 8) {
 	            		Etsaia etsaia = new Etsaia(j, i);
 	                	etsaiak.add(etsaia);
 	                	mapa[i][j].setEtsaia(etsaia);
