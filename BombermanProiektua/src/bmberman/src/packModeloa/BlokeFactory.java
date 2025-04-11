@@ -12,8 +12,7 @@ public class BlokeFactory {
 		return nBlokeFactory;
 	}
 
-    // Método estático para crear bloques
-    public static Bloke createBloke(String type) {
+    public Bloke createBloke(String type) {
     	Bloke bloke = null;
         if (type.equals("gogorra") ) {
             bloke = new BlokeGogorra();

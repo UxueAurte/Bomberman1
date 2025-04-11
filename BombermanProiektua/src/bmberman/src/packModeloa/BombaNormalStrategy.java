@@ -7,4 +7,3 @@ public class BombaNormalStrategy implements BombaStrategy {
         		.setBomba(new BombaNormal(x, y));
     }
 }
-

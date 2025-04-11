@@ -10,12 +10,19 @@ import bmberman.src.packModeloa.Sua;
 public abstract class Bomba {
     protected int x, y;
     protected boolean active;
+    private BombaStrategy bombaStrategy;
 
-    public Bomba(int x, int y) {
+    protected Bomba(int x, int y,BombaStrategy bomba) {
         this.x = x;
         this.y = y;
         this.active = false;
+        this.bombaStrategy=bomba;
         startCountdown();
+        
+    }
+    
+    public void bombaAldatu(BombaStrategy bomba) {
+    	this.bombaStrategy=bomba;
     }
 
     public void startCountdown() {

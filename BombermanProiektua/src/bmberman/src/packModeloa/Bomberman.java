@@ -11,7 +11,7 @@ public abstract class Bomberman {
 	private boolean martxan = false;
 	protected String nora;
 
-	public Bomberman(int y, int x, BlokeMapa mapa, BombaStrategy pB) {
+	protected Bomberman(int y, int x, BlokeMapa mapa, BombaStrategy pB) {
 		posY = y;
 		posX = x;
 		nora = "up";
@@ -61,6 +61,6 @@ public abstract class Bomberman {
 
 	protected abstract boolean jarDezake(); // Lógica en subclases
     protected abstract void errekargatuBaldin(); // Lógica en subclases
-
+    
 	protected abstract Object getImage();
 }
