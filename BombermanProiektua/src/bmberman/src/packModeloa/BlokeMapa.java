@@ -41,39 +41,33 @@ public class BlokeMapa extends Observable {
 	private int etsaikop = 0;
 	
 	
-	public void partidaHasieratu() {
-		new hasieraPanelaBista();
-	}
-	
-	
+		
 	public static BlokeMapa getBloqueMapa() {
 		if(blokeMapa == null) {
-			blokeMapa = new BlokeMapa("someType", "someMap");
+			blokeMapa = new BlokeMapa();
 		}
 		return blokeMapa;		
 	}
 
-	public BlokeMapa(String type, String mapa) {
+	public BlokeMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
-//		this.bmberman = createBomberman(/*type*/);
-		this.bmberman = new WhiteBomberman(0, 0, this);;
-
-		etsaienMugimendua();
-	//	konfiguratuMapa(String type);
+		System.out.println(hasieraPanelaEredua.getHP().getNireBomberman());
+		this.bmberman = createBomberman(hasieraPanelaEredua.getHP().getNireBomberman());
+        etsaienMugimendua();
 }
 
 	public Bomberman getBomberman(){
 		return bmberman;
 	}
 	
-	/*public Bomberman createBomberman(String type) {
+	public Bomberman createBomberman(String type) {
 		Bomberman nireBomberman = BombermanFactory.getBombermanFactory().createBomberman(type);
 		return nireBomberman;
 		
 	}
-	*/
-	public void konfiguratuMapa(String tipoMapa) {
-        this.tipoMapa = tipoMapa;
+	
+	public void konfiguratuMapa(String tM) {
+        this.tipoMapa = tM;
         switch (tipoMapa) {
             case "c":
                 this.sortuMapaClassic();  // Mapa con bloques blandos, duros y enemigos
@@ -87,7 +81,9 @@ public class BlokeMapa extends Observable {
             default:
                 throw new IllegalArgumentException("Tipo de mapa desconocido");
         }
-        this.mapaInizializatu();  // Inicializa el mapa después de la configuración
+         // Inicializa el mapa después de la configuración
+		this.mapaInizializatu(); 
+
     }
 		
 
@@ -129,9 +125,12 @@ public class BlokeMapa extends Observable {
 	                }
 	            }
 	    	    mapa[i][j].setGelaxkaMota();
-
 	        } 
+
 	    }
+        this.mapaInizializatu();
+
+
 	    mapa[0][0].setBomberman(bmberman);	 
 	}
 	

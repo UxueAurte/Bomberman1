@@ -71,6 +71,7 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
+		
 		BlokeMapa.getBloqueMapa().addObserver(this);
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,15 +83,10 @@ public class Jokoa extends JFrame implements Observer {
 		fondoImg = new ImageIcon(getClass().getResource(seleccionarFondoAleatorio()));
       	
         addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
-        String mota = hasieraPanelaEredua.getHP().getPartidaMota();
-        String kodea = switch (mota) {
-        case "classic" -> "c";
-        case "soft" -> "s";
-        case "empty" -> "e";
-        default -> throw new IllegalArgumentException("Tipo de partida ezezaguna: " + mota);
-    };
-        BlokeMapa.getBloqueMapa().konfiguratuMapa(kodea);
-    
+       
+        
+		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
+        BlokeMapa.getBloqueMapa().konfiguratuMapa(mota);
 
 		setVisible(true);
 	}
@@ -146,6 +142,7 @@ public class Jokoa extends JFrame implements Observer {
 	}
 
 	private void sortuMatrizea() {
+		contentPane.removeAll();
 		JLabel fondoL = new JLabel(fondoImg);
 		fondoL.setLayout(new GridLayout(Filak, Zutabeak));
 		laberintoa = new KuadrikulaVista[Filak][Zutabeak];
@@ -161,8 +158,7 @@ public class Jokoa extends JFrame implements Observer {
 			}
 		}
 		add(fondoL);
-		contentPane.revalidate(); // Forzar actualización
-	    contentPane.repaint();
+		
 	}
 
 //---------------------------------------------KONTROLADOREA-------------------------------------------------

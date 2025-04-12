@@ -7,9 +7,11 @@ import java.util.TimerTask;
 public class BlackBomberman extends Bomberman {
 	private int bombak;
 	private final int MAX_BOMBAS = 1;
+	private String color = "black";
+	private boolean kargatzen = false;
 	
-	public BlackBomberman(int py, int px, BlokeMapa mapa){
-		super(py, px, mapa, new BombaSuperStrategy());
+	public BlackBomberman(int py, int px){
+		super(py, px, new BombaSuperStrategy());
 		this.bombak = MAX_BOMBAS;
 	}
 

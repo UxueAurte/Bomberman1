@@ -181,9 +181,9 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 
 	    JButton startButton = new JButton("Hasi Jokoa");
 	    startButton.addActionListener(e -> {
-	        String tipoPartida = "classic"; // lehenetsia
-	        if (soft.isSelected()) tipoPartida = "soft";
-	        else if (empty.isSelected()) tipoPartida = "empty";
+	        String tipoPartida = "c"; // lehenetsia
+	        if (soft.isSelected()) tipoPartida = "s";
+	        else if (empty.isSelected()) tipoPartida = "e";
 
 	        // Gorde eredu globalean
 	        hasieraPanelaEredua.getHP().setPartidaMota(tipoPartida);
@@ -203,7 +203,6 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		hasieraPanelaEredua nHP = hasieraPanelaEredua.getHP();		
 	}
 	
 	private hasieraPanelaKontroladorea getKontroladorea() {
@@ -231,15 +230,16 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 		
 		public void mouseClicked(MouseEvent evt) {
 	        if (evt.getSource() == lblBlackBomberman) {
-	        	HasieraPanelaEredua.getHasieraPanela().setNireBomberman("Black");
-
+	        	hasieraPanelaEredua nHP = hasieraPanelaEredua.getHP();
+	        	nHP.setNireBomberman("Black");
 	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1 copia.png")));
 	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2.png")));
 	            
 	            partidaMota();
 	        } else if (evt.getSource() == lblWhiteBomberman) {
-	        	HasieraPanela.getHasieraPanela().setNireBomberman("White");
-	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1.png")));
+	        	hasieraPanelaEredua nHP = hasieraPanelaEredua.getHP();
+	        	nHP.setNireBomberman("White");
+	        	lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1.png")));
 	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2bw.png")));
 
 	            

@@ -11,7 +11,7 @@ public abstract class Bomberman {
 	private boolean martxan = false;
 	protected String nora;
 
-	protected Bomberman(int y, int x, BlokeMapa mapa, BombaStrategy pB) {
+	protected Bomberman(int y, int x, BombaStrategy pB) {
 		posY = y;
 		posX = x;
 		nora = "up";

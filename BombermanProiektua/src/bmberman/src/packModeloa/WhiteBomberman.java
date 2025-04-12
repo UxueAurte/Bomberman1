@@ -10,8 +10,8 @@ public class WhiteBomberman extends Bomberman{
 	private String color = "white";
 	private boolean kargatzen = false;
 	
-	public WhiteBomberman(int py, int px, BlokeMapa mapa){
-		super(py, px, mapa, new BombaNormalStrategy());
+	public WhiteBomberman(int py, int px){
+		super(py, px, new BombaNormalStrategy());
 		this.bombak = MAX_BOMBAS;
 	}
 

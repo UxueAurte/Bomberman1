@@ -15,10 +15,10 @@ public class BombermanFactory {
 	
 	public Bomberman createBomberman(String type) {
 		Bomberman bomberman = null;
-		if (type.equals("white")) {
-			bomberman = new WhiteBomberman(0,0,BlokeMapa.getBloqueMapa());
+		if (type.equals("White")) {
+			bomberman = new WhiteBomberman(0,0);
 		} else {
-			bomberman = new BlackBomberman(0,0,BlokeMapa.getBloqueMapa());
+			bomberman = new BlackBomberman(0,0);
 		}
 		return bomberman;
 	}
