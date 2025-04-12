@@ -88,7 +88,6 @@ public class BlokeMapa extends Observable {
 		
 
 	public void mapaInizializatu() {
-		
 		setChanged();
 		notifyObservers(new Object[] { "hasieratu" });
 		for (int i = 0; i < filak; i++) {
@@ -97,6 +96,7 @@ public class BlokeMapa extends Observable {
 			}
 		}
 	}
+	
 	public void sortuMapaClassic() {
 	    Random random = new Random();
 	    this.mapa = new Kuadrikula[11][17];
@@ -124,13 +124,8 @@ public class BlokeMapa extends Observable {
 	                    }
 	                }
 	            }
-	    	    mapa[i][j].setGelaxkaMota();
 	        } 
-
 	    }
-        this.mapaInizializatu();
-
-
 	    mapa[0][0].setBomberman(bmberman);	 
 	}
 	
@@ -155,7 +150,6 @@ public class BlokeMapa extends Observable {
 	                    System.out.println("Generando enemigos...");
 	                    System.out.println("Etsaia añadido en posición (" + i + ", " + j + ")");
 	                 }
-	            mapa[i][j].setGelaxkaMota();
 	            }
 	        }
 	    mapa[0][0].setBomberman(bmberman);
@@ -182,7 +176,6 @@ public class BlokeMapa extends Observable {
 	                    // Aquí puedes agregar la lógica para crear y agregar enemigos
 	                }
 	            }
-	            mapa[i][j].setGelaxkaMota();
 	        }
 	    }
 	    mapa[0][0].setBomberman(bmberman);
