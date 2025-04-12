@@ -71,8 +71,8 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
-		
-		BlokeMapa.getBloqueMapa().addObserver(this);
+		BlokeMapa BM = BlokeMapa.getBloqueMapa();
+		BM.addObserver(this);
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
@@ -86,7 +86,7 @@ public class Jokoa extends JFrame implements Observer {
        
         
 		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
-        BlokeMapa.getBloqueMapa().konfiguratuMapa(mota);
+        BM.konfiguratuMapa(mota);
 
 		setVisible(true);
 	}
