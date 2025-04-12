@@ -14,6 +14,7 @@ public class hasieraPanelaEredua extends Observable  {
 	public static hasieraPanelaEredua getHP() { 
 		if (nHP == null) {
 			nHP = new hasieraPanelaEredua();
+			
 		}
 		return nHP;
 	}
@@ -22,6 +23,10 @@ public class hasieraPanelaEredua extends Observable  {
 		return nireBomberman; 
 		}
 	
+	
+
+	
+
     public String getPartidaMota() { 
     	return partidaMota; 
     	}

@@ -15,7 +15,7 @@ public abstract class Bomberman {
 		posY = y;
 		posX = x;
 		nora = "up";
-		pBomba = pB; 
+		pBomba = pB;
 
 	}
 	

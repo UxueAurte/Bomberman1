@@ -28,7 +28,10 @@ import bmberman.src.packModeloa.BlokeBiguna;
 import bmberman.src.packModeloa.BlokeMapa;
 import bmberman.src.packModeloa.Bomba;
 import bmberman.src.packModeloa.Bomberman;
+import bmberman.src.packModeloa.BombermanFactory;
 import bmberman.src.packModeloa.Kuadrikula;
+import bmberman.src.packModeloa.hasieraPanelaEredua;
+
 import java.util.TimerTask;
 
 public class Jokoa extends JFrame implements Observer {
@@ -79,6 +82,15 @@ public class Jokoa extends JFrame implements Observer {
 		fondoImg = new ImageIcon(getClass().getResource(seleccionarFondoAleatorio()));
       	
         addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
+        String mota = hasieraPanelaEredua.getHP().getPartidaMota();
+        String kodea = switch (mota) {
+        case "classic" -> "c";
+        case "soft" -> "s";
+        case "empty" -> "e";
+        default -> throw new IllegalArgumentException("Tipo de partida ezezaguna: " + mota);
+    };
+        BlokeMapa.getBloqueMapa().konfiguratuMapa(kodea);
+    
 
 		setVisible(true);
 	}

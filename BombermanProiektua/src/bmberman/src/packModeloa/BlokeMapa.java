@@ -48,15 +48,16 @@ public class BlokeMapa extends Observable {
 	
 	public static BlokeMapa getBloqueMapa() {
 		if(blokeMapa == null) {
-			blokeMapa = new BlokeMapa();
+			blokeMapa = new BlokeMapa("someType", "someMap");
 		}
 		return blokeMapa;		
 	}
 
-	public BlokeMapa(/*String type, String mapa*/) {
+	public BlokeMapa(String type, String mapa) {
 		this.mapa = new Kuadrikula[filak][zutabeak];
-	//	this.bmberman = createBomberman(/*type*/);
-		this.bmberman = new WhiteBomberman(0, 0, this);
+//		this.bmberman = createBomberman(/*type*/);
+		this.bmberman = new WhiteBomberman(0, 0, this);;
+
 		etsaienMugimendua();
 	//	konfiguratuMapa(String type);
 }
@@ -69,8 +70,8 @@ public class BlokeMapa extends Observable {
 		Bomberman nireBomberman = BombermanFactory.getBombermanFactory().createBomberman(type);
 		return nireBomberman;
 		
-	}*/
-	
+	}
+	*/
 	public void konfiguratuMapa(String tipoMapa) {
         this.tipoMapa = tipoMapa;
         switch (tipoMapa) {
@@ -194,6 +195,10 @@ public class BlokeMapa extends Observable {
 		setChanged();
 		notifyObservers(new Object[] { "hil" });
 	}
+	public void setBomberman(Bomberman b) {
+		this.bmberman = b;
+	}
+
 	
 	public void gehituBomba(int x, int y, Bomba b) {
 	    mapa[x][y].setBomba(b);

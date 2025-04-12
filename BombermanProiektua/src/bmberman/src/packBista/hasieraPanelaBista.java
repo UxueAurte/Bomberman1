@@ -181,12 +181,18 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 
 	    JButton startButton = new JButton("Hasi Jokoa");
 	    startButton.addActionListener(e -> {
-	        String tipoPartida = "classic"; // valor por defecto
+	        String tipoPartida = "classic"; // lehenetsia
 	        if (soft.isSelected()) tipoPartida = "soft";
 	        else if (empty.isSelected()) tipoPartida = "empty";
 
-	        dialog.dispose(); // Cierra la ventanita
-	        
+	        // Gorde eredu globalean
+	        hasieraPanelaEredua.getHP().setPartidaMota(tipoPartida);
+
+	        dialog.dispose(); // itxi partida mota dialogoa
+
+	        // Hasieratu jokoa eta itxi hasiera pantaila
+			new Jokoa();
+	        itxi();  // metodoa zure hasieraPanelaBista-n dago
 	    });
 
 	    dialog.add(centerPanel, BorderLayout.CENTER);

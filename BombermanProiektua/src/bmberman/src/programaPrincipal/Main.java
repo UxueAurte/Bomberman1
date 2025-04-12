@@ -7,20 +7,19 @@ import bmberman.src.packBista.*;
 import bmberman.src.packModeloa.*;
 
 
+import javax.swing.JFrame;
+import bmberman.src.packBista.hasieraPanelaBista;
+
 public class Main extends JFrame {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		BlokeMapa mapa = BlokeMapa.getBloqueMapa();
-		Jokoa j = new Jokoa();
-
-		mapa.konfiguratuMapa("c");;
-
-		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		j.setSize(800, 500);
-		j.setVisible(true);
-	}
+    public static void main(String[] args) {
+        hasieraPanelaBista hasiera = new hasieraPanelaBista();
+        hasiera.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        hasiera.setVisible(true);
+    }
 }
+
+
 
 
 
