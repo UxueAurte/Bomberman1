@@ -231,18 +231,21 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 		
 		public void mouseClicked(MouseEvent evt) {
 	        if (evt.getSource() == lblBlackBomberman) {
+	        	HasieraPanelaEredua.getHasieraPanela().setNireBomberman("Black");
+
 	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1 copia.png")));
 	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2.png")));
 	            
 	            partidaMota();
 	        } else if (evt.getSource() == lblWhiteBomberman) {
+	        	HasieraPanela.getHasieraPanela().setNireBomberman("White");
 	            lblWhiteBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber1.png")));
 	            lblBlackBomberman.setIcon(new ImageIcon(getClass().getResource("/resources/bomber2bw.png")));
 
 	            
-	            partidaMota();
+	            partidaMota(); 
+	            }
 	        }
-	    }
 
 		@Override
 		public void keyTyped(KeyEvent e) {
