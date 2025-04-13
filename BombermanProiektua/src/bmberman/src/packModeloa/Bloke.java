@@ -1,5 +1,5 @@
 package bmberman.src.packModeloa;
 
-public class Bloke {
+public abstract class Bloke {
 
 }
