@@ -31,7 +31,7 @@ public class Etsaia {
     }
 	
 	public void egiaztatuSua() {
-        if (bizirik && BlokeMapa.getBloqueMapa().getMapa()[y][x]
+        if (bizirik && MapaFactory.getGF().getEgungoMapa().getMapa()[y][x]
         		.hasSua().equals("1")) {
             hilEtsaia();  // Si hay fuego en la posición actual, el enemigo muere
         }
@@ -40,7 +40,7 @@ public class Etsaia {
     public void hilEtsaia() {
     	if (bizirik) {
             this.bizirik = false;
-            BlokeMapa mapa = BlokeMapa.getBloqueMapa();
+            BlokeMapa mapa = MapaFactory.getGF().getEgungoMapa();
             
             // Eliminar de la celda actual
             mapa.getMapa()[y][x].removeEtsaia();

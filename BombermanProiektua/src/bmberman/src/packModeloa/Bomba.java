@@ -36,7 +36,7 @@ public abstract class Bomba {
     
     public void eztanda() {
         System.out.println("💥 BOOM! Bonbak eztanda egin du en (" + x + ", " + y + ")!");
-        BlokeMapa mapa = BlokeMapa.getBloqueMapa();
+        BlokeMapa mapa = MapaFactory.getGF().getEgungoMapa();
         mapa.getMapa()[y][x].setSua(new Sua()); // Centro de la explosión
         mapa.getMapa()[y][x].removeBomba();
         expandEztanda();
@@ -51,11 +51,11 @@ public abstract class Bomba {
             int nx = x + dx * i;
             int ny = y + dy * i;
 
-            if (!BlokeMapa.getBloqueMapa().barruanDago(nx, ny)) {
+            if (!MapaFactory.getGF().getEgungoMapa().barruanDago(nx, ny)) {
                 break;
             }
 
-            Kuadrikula celda = BlokeMapa.getBloqueMapa().getMapa()[ny][nx];
+            Kuadrikula celda = MapaFactory.getGF().getEgungoMapa().getMapa()[ny][nx];
             
             // Primero aplicar fuego en todas las celdas
             celda.setSua(new Sua());
@@ -70,10 +70,10 @@ public abstract class Bomba {
             else if (celda.hasBlokeBiguna().equals("1")) {
                 celda.removeBloke();
             }else if(celda.hasBomberman().equals("1")){
-            	BlokeMapa.getBloqueMapa().bombermanHil(nx, ny);
+            	MapaFactory.getGF().getEgungoMapa().bombermanHil(nx, ny);
             }
             	          
-            BlokeMapa.getBloqueMapa().printMapa();
+            MapaFactory.getGF().getEgungoMapa().printMapa();
         }
         return false;
     }

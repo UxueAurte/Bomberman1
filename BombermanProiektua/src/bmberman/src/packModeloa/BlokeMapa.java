@@ -19,46 +19,39 @@ import bmberman.src.packBista.Jokoa;
 
 import java.util.ArrayList;
 
-public class BlokeMapa extends Observable {
+public abstract class BlokeMapa extends Observable {
 	
 	private static BlokeMapa blokeMapa = null;
 	private static Jokoa jokoa;
 
 	//private ArrayList <Kuadrikula> arrayKuadrikula = new ArrayList <Kuadrikula>();
-	private boolean jolasten = true;
-	private int filak = 11;
-	private int zutabeak = 17;
-	private Kuadrikula[][] mapa;
-	private Bomberman bmberman;
-	private int bombak = 10;
-	private int blokeKop = 0;
+	protected boolean jolasten = true;
+	protected int filak = 11;
+	protected int zutabeak = 17;
+	protected Kuadrikula[][] mapa;
+	protected Bomberman bmberman;
+	protected int bombak = 10;
+	protected int blokeKop = 0;
 	
-	private String nora;
-	private String tipoMapa;
+	protected String nora;
+	protected String tipoMapa;
 	//private Etsaia etsaia;
-	private boolean isHandlingKeyPress = false;
-	private ArrayList<Etsaia> etsaiak= new ArrayList<>();
-	private int etsaikop = 0;
+	protected boolean isHandlingKeyPress = false;
+	protected ArrayList<Etsaia> etsaiak= new ArrayList<>();
+	protected int etsaikop = 0;
 	
-	
-		
-	public static BlokeMapa getBloqueMapa() {
-		if(blokeMapa == null) {
-			blokeMapa = new BlokeMapa();
-		}
-		return blokeMapa;		
-	}
-
-	public BlokeMapa() {
+	public BlokeMapa(String pMota, Bomberman pBomberman) {
+		this.tipoMapa = pMota;
 		this.mapa = new Kuadrikula[filak][zutabeak];
-		System.out.println(hasieraPanelaEredua.getHP().getNireBomberman());
 		this.bmberman = createBomberman(hasieraPanelaEredua.getHP().getNireBomberman());
         etsaienMugimendua();
-}
-
+	}
+	
 	public Bomberman getBomberman(){
 		return bmberman;
 	}
+
+	protected abstract void sortuMapa(); //Factory patroierako
 	
 	public Bomberman createBomberman(String type) {
 		Bomberman nireBomberman = BombermanFactory.getBombermanFactory().createBomberman(type);
@@ -66,27 +59,6 @@ public class BlokeMapa extends Observable {
 		
 	}
 	
-	public void konfiguratuMapa(String tM) {
-        this.tipoMapa = tM;
-        switch (tipoMapa) {
-            case "c":
-                this.sortuMapaClassic();  // Mapa con bloques blandos, duros y enemigos
-                break;
-            case "s":
-                this.sortuMapaSoft();  // Solo bloques blandos
-                break;
-            case "e":
-                this.sortuMapaEmpty();  // Sin bloques, con enemigos
-                break;
-            default:
-                throw new IllegalArgumentException("Tipo de mapa desconocido");
-        }
-         // Inicializa el mapa después de la configuración
-		this.mapaInizializatu(); 
-
-    }
-		
-
 	public void mapaInizializatu() {
 		setChanged();
 		notifyObservers(new Object[] { "hasieratu" });
@@ -97,90 +69,7 @@ public class BlokeMapa extends Observable {
 		}
 	}
 	
-	public void sortuMapaClassic() {
-	    Random random = new Random();
-	    this.mapa = new Kuadrikula[11][17];
-	    for (int i = 0; i < filak; i++) {
-	        for (int j = 0; j < zutabeak; j++) {
-	            mapa[i][j] = new Kuadrikula();
-	            if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 1 && j == 0)) {
-	                continue;
-	            } else if (i % 2 == 0 && j % 2 == 0) {
-	            	Bloke bloke = BlokeFactory.getBlokeFactory().createBloke("gogorra");
-	                mapa[i][j].setBloke(bloke);
-	            } else {
-	                if (random.nextDouble() * 100 > 40) {
-	                	Bloke bloke = BlokeFactory.getBlokeFactory().createBloke("biguna");
-		                mapa[i][j].setBloke(bloke);
-	                    this.blokeKop++;
-	                } else {
-	                    if (random.nextDouble() * 100 > 90 && etsaikop < 6) {
-	                    	Etsaia etsaia = new Etsaia(j, i);
-		                	etsaiak.add(etsaia);
-		                	mapa[i][j].setEtsaia(etsaia);
-		                    etsaikop++;
-		                    System.out.println("Generando enemigos...");
-		                    System.out.println("Etsaia añadido en posición (" + i + ", " + j + ")");
-	                    }
-	                }
-	            }
-	        } 
-	    }
-	    mapa[0][0].setBomberman(bmberman);	 
-	}
 	
-	public void sortuMapaSoft() {
-	    Random random = new Random();
-	    this.mapa = new Kuadrikula[11][17]; // Tamaño del mapa, ajustable si es necesario
-	    for (int i = 0; i < filak; i++) {
-	        for (int j = 0; j < zutabeak; j++) {
-	            mapa[i][j] = new Kuadrikula();
-	            if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 1 && j == 0)) {
-	                continue;
-	            } else if (random.nextDouble() * 100 > 40) {
-                	Bloke bloke = BlokeFactory.getBlokeFactory().createBloke("biguna");
-	                mapa[i][j].setBloke(bloke);
-                    this.blokeKop++;
-	            }else{
-	            	if (random.nextDouble() * 100 > 90 && etsaikop < 8) {
-	            		Etsaia etsaia = new Etsaia(j, i);
-	                	etsaiak.add(etsaia);
-	                	mapa[i][j].setEtsaia(etsaia);
-	                    etsaikop++;
-	                    System.out.println("Generando enemigos...");
-	                    System.out.println("Etsaia añadido en posición (" + i + ", " + j + ")");
-	                 }
-	            }
-	        }
-	    mapa[0][0].setBomberman(bmberman);
-	    }
-	}
-	
-	public void sortuMapaEmpty() {
-	    Random random = new Random();
-	    this.mapa = new Kuadrikula[11][17]; // Tamaño del mapa, ajustable si es necesario
-	    for (int i = 0; i < filak; i++) {
-	        for (int j = 0; j < zutabeak; j++) {
-	            mapa[i][j] = new Kuadrikula();
-	            if ((i == 0 && j == 0) || (i == 0 && j == 1) || (i == 1 && j == 0)) {
-	                continue;
-	            } else {
-	                // No se colocan bloques, solo enemigos
-	                if (random.nextDouble() * 100 > 50 && etsaikop < 10) {
-	                	Etsaia etsaia = new Etsaia(j, i);
-	                	etsaiak.add(etsaia);
-	                	mapa[i][j].setEtsaia(etsaia);
-	                    etsaikop++;
-	                    System.out.println("Generando enemigos...");
-	                    System.out.println("Etsaia añadido en posición (" + i + ", " + j + ")");
-	                    // Aquí puedes agregar la lógica para crear y agregar enemigos
-	                }
-	            }
-	        }
-	    }
-	    mapa[0][0].setBomberman(bmberman);
-	}
-
 	public void bombermanHil(int x, int y) {
 		mapa[y][x].removeBomberman();
 		jolasaGelditu();
@@ -361,7 +250,6 @@ public class BlokeMapa extends Observable {
 	    }
 	}
 
-	// Método auxiliar para verificar si está junto a Bomberman
 	private boolean estaJuntoABomberman(int x, int y) {
 	    int[][] direcciones = {{0,1}, {1,0}, {0,-1}, {-1,0}};
 	    for (int[] dir : direcciones) {
@@ -405,8 +293,6 @@ public class BlokeMapa extends Observable {
 	public ArrayList<Etsaia> getEtsaiak() {
 		// TODO Auto-generated method stub
 		return this.etsaiak;
-	}
+	}	
 
 }
-
-//EN BLOQUE MAPA CREAR VARIOS METODOS CON LO QUE PUEDA PASAR DURANTE EL JUEO Y EN UN NOTIFYoBSERVERS METER UN STRIG CON LO QUE PASA 

@@ -14,13 +14,13 @@ public class BombaNormal extends Bomba {
     	boolean gorantz = expandDirection(x, y, 0, -1, 1); // Arriba
     	boolean beherantz = expandDirection(x, y, 0, 1, 1);  // Abajo
     	
-		BlokeMapa.getBloqueMapa().printMapa();
+    	MapaFactory.getGF().getEgungoMapa().printMapa();
 		
 		bombermanHil = gorantz || beherantz || ezker || eskubi;
 		System.out.println(bombermanHil);
 		
 		if (bombermanHil) {
-			BlokeMapa.getBloqueMapa().bombermanHil(x, y);
+			MapaFactory.getGF().getEgungoMapa().bombermanHil(x, y);
 		}
 
        }

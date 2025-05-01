@@ -190,10 +190,10 @@ public class Kuadrikula extends Observable {
     public void removeBloke() {
         if (hasBlokeBiguna().equals("1")) {
 			bloke = null; // Bloke biguna ezabatu
-			BlokeMapa.getBloqueMapa().setBlokeKop();
-			System.out.println(BlokeMapa.getBloqueMapa().getBlokeKop());
-			if (BlokeMapa.getBloqueMapa().getBlokeKop() == 0) {
-				BlokeMapa.getBloqueMapa().jokoaAmaitu();
+			MapaFactory.getGF().getEgungoMapa().setBlokeKop();
+			System.out.println(MapaFactory.getGF().getEgungoMapa().getBlokeKop());
+			if (MapaFactory.getGF().getEgungoMapa().getBlokeKop() == 0) {
+				MapaFactory.getGF().getEgungoMapa().jokoaAmaitu();
 			}
         }
         setGelaxkaMota();

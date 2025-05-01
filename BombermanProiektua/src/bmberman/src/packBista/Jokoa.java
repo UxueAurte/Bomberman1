@@ -30,6 +30,7 @@ import bmberman.src.packModeloa.Bomba;
 import bmberman.src.packModeloa.Bomberman;
 import bmberman.src.packModeloa.BombermanFactory;
 import bmberman.src.packModeloa.Kuadrikula;
+import bmberman.src.packModeloa.MapaFactory;
 import bmberman.src.packModeloa.hasieraPanelaEredua;
 
 import java.util.TimerTask;
@@ -71,7 +72,7 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
-		BlokeMapa BM = BlokeMapa.getBloqueMapa();
+		BlokeMapa BM = MapaFactory.getGF().getEgungoMapa();
 		BM.addObserver(this);
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,11 +83,11 @@ public class Jokoa extends JFrame implements Observer {
 		setContentPane(contentPane);
 		fondoImg = new ImageIcon(getClass().getResource(seleccionarFondoAleatorio()));
       	
-        addKeyListener(getControler()); // Llama a un método separado para manejar las teclas
+        addKeyListener(getControler()); // Kontroladorea
        
-        
 		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
-        BM.konfiguratuMapa(mota);
+        String bomberman = hasieraPanelaEredua.getHP().getNireBomberman();
+		BM.mapaInizializatu();
 
 		setVisible(true);
 	}
@@ -123,11 +124,10 @@ public class Jokoa extends JFrame implements Observer {
 	}
 
 	public void hildaBomberman() {
-
 		if (!jokoaAmaituDa) {
 			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
 			jokoaAmaituDa = true;
-			BlokeMapa.getBloqueMapa().jolasaGelditu();
+			MapaFactory.getGF().getEgungoMapa().jolasaGelditu();
 			removeKeyListener(getControler());
 		}
 	}
@@ -140,7 +140,13 @@ public class Jokoa extends JFrame implements Observer {
 		removeKeyListener(getControler()); //
 		jokoaAmaituDa = true;
 	}
-
+	
+/*	private void jokoaBerrabiarazi() {
+		dispose();
+		jokoaAmaituDa=false;
+		new Jokoa();
+	}
+*/
 	private void sortuMatrizea() {
 		contentPane.removeAll();
 		JLabel fondoL = new JLabel(fondoImg);
@@ -149,7 +155,7 @@ public class Jokoa extends JFrame implements Observer {
 
 		for (int i = 0; i < Filak; i++) {
 			for (int j = 0; j < Zutabeak; j++) {
-				Kuadrikula kuad = BlokeMapa.getBloqueMapa().getMapa()[i][j];
+				Kuadrikula kuad = MapaFactory.getGF().getEgungoMapa().getMapa()[i][j];
 				KuadrikulaVista kv = new KuadrikulaVista();
 				kuad.addObserver(kv);
 				laberintoa[i][j] = kv;
@@ -167,30 +173,29 @@ public class Jokoa extends JFrame implements Observer {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-
 		}
-
+		
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
 			String u = new String();
-			Bomberman bomberman = BlokeMapa.getBloqueMapa().getBomberman();
+			Bomberman bomberman = MapaFactory.getGF().getEgungoMapa().getBomberman();
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				u = "up";
-				BlokeMapa.getBloqueMapa().mugimendua(0, -1, u);
+				MapaFactory.getGF().getEgungoMapa().mugimendua(0, -1, u);
 				break;
 			case KeyEvent.VK_DOWN:
 				u = "down";
-				BlokeMapa.getBloqueMapa().mugimendua(0, 1, u);
+				MapaFactory.getGF().getEgungoMapa().mugimendua(0, 1, u);
 				break;
 			case KeyEvent.VK_LEFT:
 				u = "left";
-				BlokeMapa.getBloqueMapa().mugimendua(-1, 0, u);
+				MapaFactory.getGF().getEgungoMapa().mugimendua(-1, 0, u);
 				break;
 			case KeyEvent.VK_RIGHT:
 				u = "right";
-				BlokeMapa.getBloqueMapa().mugimendua(1, 0, u);
+				MapaFactory.getGF().getEgungoMapa().mugimendua(1, 0, u);
 				break;
 			case KeyEvent.VK_ENTER:
 				u = "bomba";

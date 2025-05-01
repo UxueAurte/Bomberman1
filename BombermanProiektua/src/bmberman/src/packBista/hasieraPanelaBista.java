@@ -72,7 +72,6 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	        
 			hasieraPanelaEredua.getHP().addObserver(this);
 			addKeyListener(kontroladorea);
-			System.out.println("La ventana debería aparecer ahora");
 			setVisible(true);		
 		}
 	
@@ -185,12 +184,9 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	        if (soft.isSelected()) tipoPartida = "s";
 	        else if (empty.isSelected()) tipoPartida = "e";
 
-	        // Gorde eredu globalean
 	        hasieraPanelaEredua.getHP().setPartidaMota(tipoPartida);
 
 	        dialog.dispose(); // itxi partida mota dialogoa
-
-	        // Hasieratu jokoa eta itxi hasiera pantaila
 			new Jokoa();
 	        itxi();  // metodoa zure hasieraPanelaBista-n dago
 	    });
