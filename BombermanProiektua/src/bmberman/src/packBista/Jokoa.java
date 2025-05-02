@@ -72,6 +72,7 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
+        MapaFactory.createMapa(hasieraPanelaEredua.getHP().getPartidaMota());
 		BlokeMapa BM = MapaFactory.getGF().getEgungoMapa();
 		BM.addObserver(this);
 		setTitle("BOMBERMAN");
@@ -84,7 +85,7 @@ public class Jokoa extends JFrame implements Observer {
 		fondoImg = new ImageIcon(getClass().getResource(seleccionarFondoAleatorio()));
       	
         addKeyListener(getControler()); // Kontroladorea
-       
+        
 		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
         String bomberman = hasieraPanelaEredua.getHP().getNireBomberman();
 		BM.mapaInizializatu();

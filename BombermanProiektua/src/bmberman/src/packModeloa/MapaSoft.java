@@ -3,8 +3,8 @@ package bmberman.src.packModeloa;
 import java.util.Random;
 
 public class MapaSoft extends BlokeMapa{
-	public MapaSoft(String pMota, Bomberman bomberman) {
-		super(pMota, bomberman);
+	public MapaSoft(String pMota) {
+		super(pMota);
     }
 	 @Override
 	 public void sortuMapa() {

@@ -40,13 +40,14 @@ public abstract class BlokeMapa extends Observable {
 	protected ArrayList<Etsaia> etsaiak= new ArrayList<>();
 	protected int etsaikop = 0;
 	
-	public BlokeMapa(String pMota, Bomberman pBomberman) {
+	public BlokeMapa(String pMota) {
 		this.tipoMapa = pMota;
 		this.mapa = new Kuadrikula[filak][zutabeak];
 		this.bmberman = createBomberman(hasieraPanelaEredua.getHP().getNireBomberman());
+		this.sortuMapa();
         etsaienMugimendua();
 	}
-	
+
 	public Bomberman getBomberman(){
 		return bmberman;
 	}
