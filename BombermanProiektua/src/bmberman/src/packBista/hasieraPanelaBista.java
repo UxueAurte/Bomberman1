@@ -184,8 +184,9 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	        if (soft.isSelected()) tipoPartida = "s";
 	        else if (empty.isSelected()) tipoPartida = "e";
 
-	        hasieraPanelaEredua.getHP().setPartidaMota(tipoPartida);
-
+	        hasieraPanelaEredua.getHP().setPartidaMota(tipoPartida);	        
+	        
+	        
 	        dialog.dispose(); // itxi partida mota dialogoa
 			new Jokoa();
 	        itxi();  // metodoa zure hasieraPanelaBista-n dago

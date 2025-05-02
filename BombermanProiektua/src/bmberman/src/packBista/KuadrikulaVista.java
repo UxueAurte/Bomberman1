@@ -86,8 +86,10 @@ public class KuadrikulaVista extends JLabel implements Observer {
 	 */
 	
 	private String seleccionarImagenAleatoria(List<String> imagenes) {
-        Random random = new Random();
-        return imagenes.get(random.nextInt(imagenes.size()));
+		return imagenes.stream()
+		        .skip(new Random().nextInt(imagenes.size()))
+		        .findFirst()
+		        .orElse("/resources/fallback.png");
     }
 	//EDITAR PARA MVC
 	

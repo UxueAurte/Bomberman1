@@ -94,8 +94,10 @@ public class Jokoa extends JFrame implements Observer {
 	}
 	
 	private String seleccionarFondoAleatorio() {
-        Random random = new Random();
-        return fondoImagenes.get(random.nextInt(fondoImagenes.size()));
+		return fondoImagenes.stream()
+		        .skip(new Random().nextInt(fondoImagenes.size()))
+		        .findFirst()
+		        .orElse("/resources/default.png");
     }
 	
 

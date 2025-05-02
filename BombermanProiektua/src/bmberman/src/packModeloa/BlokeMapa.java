@@ -282,6 +282,8 @@ public abstract class BlokeMapa extends Observable {
 	        System.out.println();
 	    }
 	}
+	
+	
 
 	public void jokoaAmaitu() {
 		// TODO Auto-generated method stub
