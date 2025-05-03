@@ -2,7 +2,7 @@ package bmberman.src.packModeloa;
 
 import java.util.Random;
 
-public class MapaClassic extends Mapa{
+public class MapaClassic extends BlokeMapa{
 	public MapaClassic(String pMota) {
 		super(pMota);
     }
