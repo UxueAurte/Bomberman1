@@ -11,7 +11,7 @@ public class BlackBomberman extends Bomberman {
 	private boolean kargatzen = false;
 	
 	public BlackBomberman(int py, int px){
-		super(py, px, new BombaSuperStrategy());
+		super(py, px);
 		this.bombak = MAX_BOMBAS;
 	}
 
@@ -33,14 +33,15 @@ public class BlackBomberman extends Bomberman {
     }
 	
 	public void bombaJarri() {
-		if(jarDezake()) {
-			super.bombaJarri();
-			bombak--;
-			if (bombak == 0) {
-				errekargatuBaldin();
-			}
-		}
-	}
+		if (bombak > 0) {
+			Bomba b = new BombaSuper(this.getX(), this.getY());
+        	colocarBomba(b);
+            bombak--;
+            if (bombak == 0) {
+                errekargatuBaldin();
+            }
+        }
+    }
 
 	@Override
 	public String getImage() {

@@ -18,18 +18,27 @@ public class MapaFactory {
         BlokeMapa mapa = null;
         switch (mota) {
             case "c": 
-                mapa = new MapaClassic(mota);
+                mapa = new MapaClassic();
+                mapa.mapaInizializatu();
+
                 break;
             case "s": 
-                mapa = new MapaSoft(mota);
+                mapa = new MapaSoft();
+                mapa.mapaInizializatu();
+
                 break;
             case "e": 
-                mapa = new MapaEmpty(mota);
+                mapa = new MapaEmpty();
+                mapa.mapaInizializatu();
+
                 break;
             default: 
                 throw new IllegalArgumentException("Tipo de mapa no válido");
         }
         MapaFactory.egungoMapa = mapa;
+        mapa.mapaInizializatu();
+
+        System.out.println(mapa);
         return mapa;
     }
     

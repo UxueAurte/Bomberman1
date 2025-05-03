@@ -40,18 +40,32 @@ public abstract class BlokeMapa extends Observable {
 	protected ArrayList<Etsaia> etsaiak= new ArrayList<>();
 	protected int etsaikop = 0;
 	
-	public BlokeMapa(String pMota) {
-		this.tipoMapa = pMota;
+	
+	public BlokeMapa() {
 		this.mapa = new Kuadrikula[filak][zutabeak];
+		System.out.println(hasieraPanelaEredua.getHP().getNireBomberman());
 		this.bmberman = createBomberman(hasieraPanelaEredua.getHP().getNireBomberman());
-		this.sortuMapa();
         etsaienMugimendua();
+        
 	}
+	
+	public static BlokeMapa getBloqueMapa() {
+		if (blokeMapa == null) {
+			String tipoMapa = hasieraPanelaEredua.getHP().getPartidaMota();
+			blokeMapa = MapaFactory.createMapa(tipoMapa);
+			System.out.println(tipoMapa);
 
+		}
+		return blokeMapa;
+	}
+	
+	
 	public Bomberman getBomberman(){
 		return bmberman;
 	}
 
+	
+	
 	protected abstract void sortuMapa(); //Factory patroierako
 	
 	public Bomberman createBomberman(String type) {
@@ -61,8 +75,9 @@ public abstract class BlokeMapa extends Observable {
 	}
 	
 	public void mapaInizializatu() {
+		System.out.println("Mapa inizializatzen");
 		setChanged();
-		notifyObservers(new Object[] { "hasieratu" });
+		notifyObservers(new Object[] {"hasieratu"});
 		for (int i = 0; i < filak; i++) {
 			for (int j = 0; j < zutabeak; j++) {
 				mapa[i][j].setGelaxkaMota();

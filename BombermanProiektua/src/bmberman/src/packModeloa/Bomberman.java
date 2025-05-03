@@ -7,25 +7,27 @@ public abstract class Bomberman {
 
 	private int posY;
 	private int posX;
-	private BombaStrategy pBomba;
+	protected Bomba pBomba;
 	private boolean martxan = false;
 	protected String nora;
 
-	protected Bomberman(int y, int x, BombaStrategy pB) {
+	protected Bomberman(int y, int x) {
 		posY = y;
 		posX = x;
 		nora = "up";
-		pBomba = pB;
 
 	}
 	
-	public void bombaJarri() {
-		if(jarDezake()){
-			pBomba.bombaJ(posX, posY);
-			errekargatuBaldin();
-		}
-	}
+	public abstract void bombaJarri();
 	
+	protected void colocarBomba(Bomba b) {
+	    System.out.println("Intentando colocar una bomba en: (" + getX() + ", " + getY() + ")");
+        pBomba = b;
+        pBomba.setPos(posX, posY);
+        pBomba.startCountdown();
+        BlokeMapa.getBloqueMapa().getMapa()[posY][posX].setBomba(pBomba);
+    }
+		
 	public String getNorabide() {
         return nora;
     }

@@ -3,9 +3,11 @@ package bmberman.src.packModeloa;
 import java.util.Random;
 
 public class MapaClassic extends BlokeMapa{
-	public MapaClassic(String pMota) {
-		super(pMota);
-    }
+	public MapaClassic() {
+		super();
+		 sortuMapa();
+		 System.out.println("mapa sortzen");    
+	}
 	 @Override
 	 public void sortuMapa() {
 		 Random random = new Random();
@@ -54,8 +56,10 @@ public class MapaClassic extends BlokeMapa{
 	                }
 	            }
 	        }
-	        this.mapaInizializatu();
-	 	    mapa[0][0].setBomberman(bmberman);	 
+	        
+	 	    mapa[0][0].setBomberman(bmberman);	
+	 	   this.mapaInizializatu();
+	 	    
 	 	}
 	}
 

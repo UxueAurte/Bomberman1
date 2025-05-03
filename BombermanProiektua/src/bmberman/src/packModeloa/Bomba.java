@@ -21,6 +21,12 @@ public abstract class Bomba {
         
     }
     
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+       
     public void bombaAldatu(BombaStrategy bomba) {
     	this.bombaStrategy=bomba;
     }
@@ -36,48 +42,11 @@ public abstract class Bomba {
     
     public void eztanda() {
         System.out.println("💥 BOOM! Bonbak eztanda egin du en (" + x + ", " + y + ")!");
-        BlokeMapa mapa = MapaFactory.getGF().getEgungoMapa();
+        BlokeMapa mapa = BlokeMapa.getBloqueMapa();
         mapa.getMapa()[y][x].setSua(new Sua()); // Centro de la explosión
         mapa.getMapa()[y][x].removeBomba();
-        expandEztanda();
-                
+        bombaStrategy.eztanda(x, y); // Usa la estrategia para expandir la explosión
     }
-
-    protected abstract void expandEztanda(); // Diferentes estrategias de expansión
-
-    protected boolean expandDirection(int x, int y, int dx, int dy, int alcance) {
-        boolean continuar = true;
-        for (int i = 1; i <= alcance && continuar; i++) {
-            int nx = x + dx * i;
-            int ny = y + dy * i;
-
-            if (!MapaFactory.getGF().getEgungoMapa().barruanDago(nx, ny)) {
-                break;
-            }
-
-            Kuadrikula celda = MapaFactory.getGF().getEgungoMapa().getMapa()[ny][nx];
-            
-            // Primero aplicar fuego en todas las celdas
-            celda.setSua(new Sua());
-            
-            if (celda.hasEtsaia().equals("1")) {
-                celda.getEtsaia().hilEtsaia();
-            
-            // Luego verificar obstáculos
-            } else if (celda.hasBlokeGogorra().equals("1")) {
-                continuar = false;
-            } 
-            else if (celda.hasBlokeBiguna().equals("1")) {
-                celda.removeBloke();
-            }else if(celda.hasBomberman().equals("1")){
-            	MapaFactory.getGF().getEgungoMapa().bombermanHil(nx, ny);
-            }
-            	          
-            MapaFactory.getGF().getEgungoMapa().printMapa();
-        }
-        return false;
-    }
-    
     
 }
 

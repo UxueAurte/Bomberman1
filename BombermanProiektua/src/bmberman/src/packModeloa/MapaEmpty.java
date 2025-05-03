@@ -3,8 +3,9 @@ package bmberman.src.packModeloa;
 import java.util.Random;
 
 public class MapaEmpty extends BlokeMapa{
-	 public MapaEmpty(String pMota) {
-			super(pMota);
+	 public MapaEmpty() {
+		 super();
+		 sortuMapa();
 	    }
 	 @Override
 	 public void sortuMapa() {
@@ -47,6 +48,8 @@ public class MapaEmpty extends BlokeMapa{
 	 	    }
 	 this.mapaInizializatu();
 	 mapa[0][0].setBomberman(bmberman);
+	 System.out.println("Mapa mota");
+	 
 	 }
 }
 	        

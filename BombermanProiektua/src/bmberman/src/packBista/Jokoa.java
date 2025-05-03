@@ -72,9 +72,14 @@ public class Jokoa extends JFrame implements Observer {
 	 * Create the frame.
 	 */
 	public Jokoa() {
-        MapaFactory.createMapa(hasieraPanelaEredua.getHP().getPartidaMota());
-		BlokeMapa BM = MapaFactory.getGF().getEgungoMapa();
+		BlokeMapa BM = BlokeMapa.getBloqueMapa();
+		System.out.println("Mapa sortu da");
 		BM.addObserver(this);
+		System.out.println(BM);
+		
+		
+
+	
 		setTitle("BOMBERMAN");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
@@ -88,9 +93,10 @@ public class Jokoa extends JFrame implements Observer {
         
 		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
         String bomberman = hasieraPanelaEredua.getHP().getNireBomberman();
-		BM.mapaInizializatu();
+        BM.mapaInizializatu();
 
 		setVisible(true);
+		
 	}
 	
 	private String seleccionarFondoAleatorio() {
@@ -151,6 +157,7 @@ public class Jokoa extends JFrame implements Observer {
 	}
 */
 	private void sortuMatrizea() {
+		System.out.println("Mapa sortzen");
 		contentPane.removeAll();
 		JLabel fondoL = new JLabel(fondoImg);
 		fondoL.setLayout(new GridLayout(Filak, Zutabeak));
@@ -158,7 +165,7 @@ public class Jokoa extends JFrame implements Observer {
 
 		for (int i = 0; i < Filak; i++) {
 			for (int j = 0; j < Zutabeak; j++) {
-				Kuadrikula kuad = MapaFactory.getGF().getEgungoMapa().getMapa()[i][j];
+				Kuadrikula kuad = BlokeMapa.getBloqueMapa().getMapa()[i][j];
 				KuadrikulaVista kv = new KuadrikulaVista();
 				kuad.addObserver(kv);
 				laberintoa[i][j] = kv;
