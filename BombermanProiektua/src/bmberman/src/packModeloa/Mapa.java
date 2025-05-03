@@ -6,3 +6,4 @@ public abstract class Mapa extends BlokeMapa{
 	}
 
 }
+//ald

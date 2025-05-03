@@ -58,3 +58,5 @@ public class MapaClassic extends Mapa{
 	 	    mapa[0][0].setBomberman(bmberman);	 
 	 	}
 	}
+
+//aldaketak

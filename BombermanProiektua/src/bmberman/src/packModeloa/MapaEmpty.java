@@ -44,8 +44,9 @@ public class MapaEmpty extends BlokeMapa{
 	                    }
 	                }
 	            }
-	        }
-	 	    this.mapaInizializatu();
-	 	    mapa[0][0].setBomberman(bmberman);
+	 	    }
+	 this.mapaInizializatu();
+	 mapa[0][0].setBomberman(bmberman);
 	 }
 }
+	        

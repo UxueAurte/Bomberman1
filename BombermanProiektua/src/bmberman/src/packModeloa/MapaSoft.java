@@ -53,3 +53,4 @@ public class MapaSoft extends Mapa{
 	 	    mapa[0][0].setBomberman(bmberman);
 	 }
 }
+//aldak
