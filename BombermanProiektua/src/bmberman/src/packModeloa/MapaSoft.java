@@ -54,4 +54,3 @@ public class MapaSoft extends BlokeMapa{
 	 	    mapa[0][0].setBomberman(bmberman);
 	 }
 }
-//aldak

@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.swing.JFrame;
 
@@ -18,6 +20,8 @@ import bmberman.src.packBista.Jokoa;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class BlokeMapa extends Observable {
 	
@@ -78,11 +82,11 @@ public abstract class BlokeMapa extends Observable {
 		System.out.println("Mapa inizializatzen");
 		setChanged();
 		notifyObservers(new Object[] {"hasieratu"});
-		for (int i = 0; i < filak; i++) {
-			for (int j = 0; j < zutabeak; j++) {
-				mapa[i][j].setGelaxkaMota();
-			}
-		}
+		IntStream.range(0, filak).forEach(i ->
+	    IntStream.range(0, zutabeak).forEach(j ->
+	        mapa[i][j].setGelaxkaMota()
+	    )
+	);
 	}
 	
 	
@@ -189,12 +193,10 @@ public abstract class BlokeMapa extends Observable {
 		            }
 		            ArrayList<Etsaia> copiaEtsaiak = new ArrayList<>(etsaiak);
 		            
-		            for (Etsaia etsaia : copiaEtsaiak) {
-		                if (etsaia.bizirikDago()) {
-		                    mugituEtsaia(etsaia);
-		                }
-		            }
-	        	}
+		            copiaEtsaiak.stream()
+		            	.filter(Etsaia::bizirikDago)
+		            	.forEach(e -> mugituEtsaia(e));
+	        	}	
 		        }
 	    }, 0, 1000); // Cada 1 segundo
 	
@@ -216,31 +218,21 @@ public abstract class BlokeMapa extends Observable {
 	        bombermanHil(bombermanX, bombermanY);
 	        return;
 	    }
-
-	    ArrayList<int[]> aukeraLegalak = new ArrayList<>();
+	    
 	    int[][] norabideak = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
 
-	    for (int[] d : norabideak) {
-	        int nx = x + d[0];
-	        int ny = y + d[1];
+	    List<int[]> aukeraLegalak = Arrays.stream(norabideak)
+	    	    .map(d -> new int[]{x + d[0], y + d[1]})
+	    	    .filter(coord -> barruanDago(coord[0], coord[1]))
+	    	    .filter(coord -> {
+	    	        Kuadrikula celda = mapa[coord[1]][coord[0]];
+	    	        return celda.hasBlokeGogorra().equals("0")
+	    	            && celda.hasBlokeBiguna().equals("0")
+	    	            && celda.hasEtsaia().equals("0")
+	    	            && celda.hasBomba().equals("0");
+	    	    })
+	    	    .collect(Collectors.toList());
 
-	        if (barruanDago(nx, ny)) {
-	            Kuadrikula celda = mapa[ny][nx];
-	            
-	            // Verificar si la celda destino tiene a Bomberman
-	            if (celda.hasBomberman().equals("1")) {
-	                bombermanHil(nx, ny);
-	                return;
-	            }
-	            
-	            if (celda.hasBlokeGogorra().equals("0") &&
-	                celda.hasBlokeBiguna().equals("0") &&
-	                celda.hasEtsaia().equals("0") &&
-	                celda.hasBomba().equals("0")) {
-	                aukeraLegalak.add(new int[]{nx, ny});
-	            }
-	        }
-	    }
 
 	    if (!aukeraLegalak.isEmpty()) {
 	        int[] hautatua = aukeraLegalak.get(new Random().nextInt(aukeraLegalak.size()));
@@ -281,22 +273,23 @@ public abstract class BlokeMapa extends Observable {
 
 
 	public void printMapa() {
-	    for (int i = 0; i < mapa.length; i++) {
-	        for (int j = 0; j < mapa[0].length; j++) {
-	            String celda = "▢";
-	            if (mapa[i][j].hasSua().equals("1")) celda = "🔥";
-	            else if (mapa[i][j].hasBomberman().equals("1")) celda = "👤";
-	            else if (mapa[i][j].hasBlokeGogorra().equals("1")) celda = "▣";
-	            else if (mapa[i][j].hasBlokeBiguna().equals("1")) celda = "⊞";
-	            else if (mapa[i][j].hasEtsaia().equals("1")) {
-	                Etsaia e = mapa[i][j].getEtsaia();
-	                celda = e.bizirikDago() ? "👹" : "💀";
-	            }
+	    IntStream.range(0, mapa.length).forEach(i -> {
+	        IntStream.range(0, mapa[0].length).forEach(j -> {
+	            Kuadrikula k = mapa[i][j];
+	            String celda = 
+	                k.hasSua().equals("1") ? "🔥" :
+	                k.hasBomberman().equals("1") ? "👤" :
+	                k.hasBlokeGogorra().equals("1") ? "▣" :
+	                k.hasBlokeBiguna().equals("1") ? "⊞" :
+	                k.hasEtsaia().equals("1") ?
+	                    (k.getEtsaia().bizirikDago() ? "👹" : "💀") :
+	                "▢";
 	            System.out.print(celda + " ");
-	        }
+	        });
 	        System.out.println();
-	    }
+	    });
 	}
+
 	
 	
 
