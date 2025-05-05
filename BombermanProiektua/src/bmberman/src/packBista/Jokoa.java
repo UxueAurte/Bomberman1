@@ -219,7 +219,7 @@ public class Jokoa extends JFrame implements Observer {
 	        }
 	        denborak.add(index, denbora);
 
-	        // Reescribir archivo con los tiempos ordenados
+	        // Reescribir archivo con los tiempos ordenadosw
 	        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("denborak.txt")))) {
 	            for (String d : denborak) {
 	                out.println(d);
