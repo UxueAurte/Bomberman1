@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -202,6 +203,11 @@ public class Jokoa extends JFrame implements Observer {
 	
 	private void gordeDenbora(String denbora) {
 		try {
+	        
+			// Definir la ruta del archivo en un directorio específico
+	        String directorio = System.getProperty("user.dir"); // Obtiene el directorio donde se ejecuta el JAR
+	        String archivoPath = directorio + File.separator + "denborak.txt";
+			
 	        ArrayList<String> denborak = new ArrayList<>();
 
 	        // Leer tiempos existentes
