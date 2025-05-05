@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class WhiteBomberman extends Bomberman{
 	private int bombak;
-	private final int MAX_BOMBAS = 10;
+	private final int MAX_BOMBAS = 1000;
 	private String color = "white";
 	private boolean kargatzen = false;
 	

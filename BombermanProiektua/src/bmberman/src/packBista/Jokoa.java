@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -29,6 +33,7 @@ import bmberman.src.packModeloa.BlokeMapa;
 import bmberman.src.packModeloa.Bomba;
 import bmberman.src.packModeloa.Bomberman;
 import bmberman.src.packModeloa.BombermanFactory;
+import bmberman.src.packModeloa.DenboraEredua;
 import bmberman.src.packModeloa.Kuadrikula;
 import bmberman.src.packModeloa.MapaFactory;
 import bmberman.src.packModeloa.hasieraPanelaEredua;
@@ -56,6 +61,9 @@ public class Jokoa extends JFrame implements Observer {
 	private ImageIcon fondoImg;
 
 	private Timer timer;
+	private boolean irabaziDa = false;
+	
+	private DenboraEredua denboraEredua;
 	
 	private static final List<String> fondoImagenes = List.of(
 	        "/resources/stageBack1.png",
@@ -94,7 +102,10 @@ public class Jokoa extends JFrame implements Observer {
 		String mota = hasieraPanelaEredua.getHP().getPartidaMota();
         String bomberman = hasieraPanelaEredua.getHP().getNireBomberman();
         BM.mapaInizializatu();
-
+        
+        denboraEredua = DenboraEredua.getDenboraEredua(); // Lortu DenboraEredua instantzia
+        denboraEredua.hasieratu(); // Jokoa hasten denean timerra hasieratu
+        
 		setVisible(true);
 		
 	}
@@ -118,6 +129,7 @@ public class Jokoa extends JFrame implements Observer {
 		} else if ("hil".equals(a)) {
 			hildaBomberman();
 		} else if ("jokoaAmaitu".equals(a)) {
+			irabaziDa = true;
 			amaieraMezua();
 		}
 
@@ -134,20 +146,27 @@ public class Jokoa extends JFrame implements Observer {
 
 	public void hildaBomberman() {
 		if (!jokoaAmaituDa) {
-			JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da!", "", JOptionPane.INFORMATION_MESSAGE);
-			jokoaAmaituDa = true;
-			MapaFactory.getGF().getEgungoMapa().jolasaGelditu();
-			removeKeyListener(getControler());
+            String denbora = denboraEredua.getIraupenaFormatuan();
+            JOptionPane.showMessageDialog(Jokoa.this, "Bomberman hil da! Denbora: " + denbora, "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
+            jokoaAmaituDa = true;
+            MapaFactory.getGF().getEgungoMapa().jolasaGelditu();
+            denboraEredua.gelditu(); // Timerra gelditu jokoa amaitzen denean
+            removeKeyListener(getControler());
 		}
 	}
 
 	private void amaieraMezua() {
 		EventQueue.invokeLater(() -> {
-			JOptionPane.showMessageDialog(this, "Jokoa amaitu da! Zorionak!", "WIN",
-					JOptionPane.INFORMATION_MESSAGE);
-		});
-		removeKeyListener(getControler()); //
-		jokoaAmaituDa = true;
+            String denbora = denboraEredua.getIraupenaFormatuan();
+            JOptionPane.showMessageDialog(this, "Jokoa amaitu da! Zorionak! Denbora: " + denbora, "WIN",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+        denboraEredua.gelditu(); // Timerra gelditu jokoa amaitzen denean
+        removeKeyListener(getControler()); //
+        jokoaAmaituDa = true;
+        if (irabaziDa) {
+            gordeDenbora(denboraEredua.getIraupenaFormatuan()); // Denbora gorde soilik irabaziz gero
+        }
 	}
 	
 /*	private void jokoaBerrabiarazi() {
@@ -175,6 +194,19 @@ public class Jokoa extends JFrame implements Observer {
 		}
 		add(fondoL);
 		
+		
+	}
+	
+	private void gordeDenbora(String denbora) {
+	    try (FileWriter fw = new FileWriter("C:\\Users\\Usuario\\Desktop\\denborak.txt", true);
+	         BufferedWriter bw = new BufferedWriter(fw);
+	         PrintWriter out = new PrintWriter(bw)) {
+	        out.println(denbora);
+	        System.out.println("Denbora gordeta fitxategian: " + denbora);
+	    } catch (IOException e) {
+	        System.err.println("Errorea denbora gordetzean: " + e.getMessage());
+	    }
+	
 	}
 
 //---------------------------------------------KONTROLADOREA-------------------------------------------------
