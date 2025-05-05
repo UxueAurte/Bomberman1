@@ -198,7 +198,7 @@ public class Jokoa extends JFrame implements Observer {
 	}
 	
 	private void gordeDenbora(String denbora) {
-	    try (FileWriter fw = new FileWriter("C:\\Users\\Usuario\\Desktop\\denborak.txt", true);
+	    try (FileWriter fw = new FileWriter("denborak.txt", true);
 	         BufferedWriter bw = new BufferedWriter(fw);
 	         PrintWriter out = new PrintWriter(bw)) {
 	        out.println(denbora);

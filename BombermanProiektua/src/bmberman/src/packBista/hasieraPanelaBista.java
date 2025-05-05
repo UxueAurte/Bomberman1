@@ -225,7 +225,7 @@ public class hasieraPanelaBista extends JFrame implements Observer {
 	private void kargatuDenborak() {
 	    panelPodium.removeAll();
 	    List<String> denborak = new ArrayList<>();
-	    File denboraFitxategia = new File("C:\\\\Users\\\\Usuario\\\\Desktop\\\\denborak.txt");
+	    File denboraFitxategia = new File("denborak.txt");
 
 	    if (denboraFitxategia.exists()) {
 	        try (BufferedReader br = new BufferedReader(new FileReader(denboraFitxategia))) {
