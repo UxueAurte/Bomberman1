@@ -204,9 +204,6 @@ public class Jokoa extends JFrame implements Observer {
 	private void gordeDenbora(String denbora) {
 		try {
 	        
-			// Definir la ruta del archivo en un directorio específico
-	        String directorio = System.getProperty("user.dir"); // Obtiene el directorio donde se ejecuta el JAR
-	        String archivoPath = directorio + File.separator + "denborak.txt";
 			
 	        ArrayList<String> denborak = new ArrayList<>();
 
