@@ -6,10 +6,13 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -198,11 +201,32 @@ public class Jokoa extends JFrame implements Observer {
 	}
 	
 	private void gordeDenbora(String denbora) {
-	    try (FileWriter fw = new FileWriter("denborak.txt", true);
-	         BufferedWriter bw = new BufferedWriter(fw);
-	         PrintWriter out = new PrintWriter(bw)) {
-	        out.println(denbora);
-	        System.out.println("Denbora gordeta fitxategian: " + denbora);
+		try {
+	        ArrayList<String> denborak = new ArrayList<>();
+
+	        // Leer tiempos existentes
+	        try (BufferedReader br = new BufferedReader(new FileReader("denborak.txt"))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                denborak.add(line);
+	            }
+	        }
+
+	        // Insertar nuevo tiempo en orden alfabético
+	        int index = 0;
+	        while (index < denborak.size() && denborak.get(index).compareTo(denbora) <= 0) {
+	            index++;
+	        }
+	        denborak.add(index, denbora);
+
+	        // Reescribir archivo con los tiempos ordenados
+	        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("denborak.txt")))) {
+	            for (String d : denborak) {
+	                out.println(d);
+	            }
+	        }
+
+	        System.out.println("Denbora gordeta fitxategian (ordenatuta): " + denbora);
 	    } catch (IOException e) {
 	        System.err.println("Errorea denbora gordetzean: " + e.getMessage());
 	    }
